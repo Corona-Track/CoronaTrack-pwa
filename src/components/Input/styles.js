@@ -13,7 +13,7 @@ export const InputText = withStyles({
       color: $brandColorPrimary,
     },
     '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-      borderColor: '#2F80ED',
+      borderColor: $brandColorPrimary,
     },
     '& .MuiOutlinedInput-notchedOutline': {
       borderColor: $gray500,

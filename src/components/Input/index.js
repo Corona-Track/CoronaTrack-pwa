@@ -6,7 +6,7 @@ import { InputAdornment, IconButton } from '@material-ui/core';
 import { InputText } from './styles';
 
 export default function Input(props) {
-  const [showPassword, setShowPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(true);
 
   function IconEye() {
     return (

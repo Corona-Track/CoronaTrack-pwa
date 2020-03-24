@@ -1,17 +1,21 @@
 const initialState = {
   name: '',
   uid: '',
-  status: 0,
   cpf: '',
-  errorMessage: '',
+  signed: false,
+  loading: false,
 };
 
 export default (state = initialState, action) => {
   const { payload } = action;
 
   switch (action.type) {
-    case 'SET_NAME':
-      return { ...state, name: payload.name };
+    case 'SIGNED':
+      return { ...state, signed: payload.signed };
+
+    case 'SET_UID':
+      return { ...state, signed: true, uid: payload.uid };
+
     case 'SET_INFOS':
       return {
         ...state,
@@ -19,12 +23,6 @@ export default (state = initialState, action) => {
         name: payload.nickName,
         cpf: payload.cpf,
       };
-    case 'SET_UID':
-      return { ...state, status: 1, uid: payload.uid };
-
-    case 'SET_ERROR':
-      return { ...state, errorMessage: payload.errorMessage };
-
     default:
       return state;
   }
