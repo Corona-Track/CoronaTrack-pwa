@@ -10,3 +10,5 @@ export const Container = styled.div`
 `;
 
 export const Image = styled.img``;
+
+export const P = styled.p``;

@@ -23,16 +23,18 @@ export const isLogged = () => {
 };
 
 export const signOut = () => {
-  firebase
-    .auth()
-    .signOut()
-    .then(function() {
-      // Sign-out successful.
-      console.log('ok');
-    })
-    .catch(function(error) {
-      console.log('nonas');
-    });
+  return new Promise((resolve, reject) => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        localStorage.removeItem('Signed');
+        resolve();
+      })
+      .catch(() => {
+        reject(new Error());
+      });
+  });
 };
 
 export const setUID = uid => {
@@ -51,98 +53,101 @@ export const createNewUser = (email, password, cpf) => {
     return new Promise((resolve, reject) => {
       firebase
         .auth()
-        .createUserWithEmailAndPassword(email, password)
-        .then(({ user }) => {
-          setUID(user.uid);
-          dispatch({
-            type: 'SET_INFOS',
-            payload: {
-              email: user.email,
-            },
-          });
+        .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+        .then(() => {
           firebase
-            .database()
-            .ref(`Users/${user.uid}`)
-            .set({ cpf });
-          resolve();
+            .auth()
+            .createUserWithEmailAndPassword(email, password)
+            .then(({ user }) => {
+              setUID(user.uid);
+              dispatch({
+                type: 'SET_INFOS',
+                payload: {
+                  email: user.email,
+                },
+              });
+              firebase
+                .database()
+                .ref(`Users/${user.uid}`)
+                .set({ cpf });
+              resolve();
+            })
+            .catch(error => {
+              let errorMessage = '';
+              switch (error.code) {
+                case 'auth/email-already-in-use':
+                  errorMessage = 'E-mail já utilizado';
+                  break;
+                case 'auth/invalid-email':
+                  errorMessage = 'E-mail inválido!';
+                  break;
+                case 'auth/operation-not-allowed':
+                  errorMessage = 'Tente novamente mais tarde';
+                  break;
+                case 'auth/weak-password':
+                  errorMessage = 'Digite uma senha melhor!';
+                  break;
+                default:
+              }
+              reject(new Error(errorMessage));
+            });
         })
-        .catch(error => {
-          let errorMessage = '';
-          switch (error.code) {
-            case 'auth/email-already-in-use':
-              errorMessage = 'E-mail já utilizado';
-              break;
-            case 'auth/invalid-email':
-              errorMessage = 'E-mail inválido!';
-              break;
-            case 'auth/operation-not-allowed':
-              errorMessage = 'Tente novamente mais tarde';
-              break;
-            case 'auth/weak-password':
-              errorMessage = 'Digite uma senha melhor!';
-              break;
-            default:
-          }
-          reject(new Error(errorMessage));
+        .catch(() => {
+          reject(new Error('Error ao cadastrar, tente novamente!'));
         });
     });
   };
 };
 
 export const SignInAction = (email, password) => {
-  return dispatch => {
-    return new Promise((resolve, reject) => {
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(email, password)
-        .then(() => {
-          const { uid } = firebase.auth().currentUser;
+  return new Promise((resolve, reject) => {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        const { uid } = firebase.auth().currentUser;
 
-          setUID(uid);
-          resolve();
-        })
-        .catch(error => {
-          let errorMessage = '';
-          switch (error.code) {
-            case 'auth/invalid-email':
-              errorMessage = 'Email inválido!';
-              break;
-            case 'auth/user-disabled':
-              errorMessage = 'Seu usuário está desativado!';
-              break;
-            case 'auth/user-not-found':
-              errorMessage = 'Não existe este usuário!';
-              break;
-            case 'auth/wrong-password':
-              errorMessage = 'E-mail e/ou senha errados!';
-              break;
-            default:
-          }
-          reject(new Error(errorMessage));
-        });
-    });
-  };
+        setUID(uid);
+        localStorage.setItem('Signed', true);
+        resolve();
+      })
+      .catch(error => {
+        let errorMessage = '';
+        switch (error.code) {
+          case 'auth/invalid-email':
+            errorMessage = 'Email inválido!';
+            break;
+          case 'auth/user-disabled':
+            errorMessage = 'Seu usuário está desativado!';
+            break;
+          case 'auth/user-not-found':
+            errorMessage = 'Não existe este usuário!';
+            break;
+          case 'auth/wrong-password':
+            errorMessage = 'E-mail e/ou senha errados!';
+            break;
+          default:
+        }
+        reject(new Error(errorMessage));
+      });
+  });
 };
 
 export const loginWithFacebook = () => {
   return dispatch => {
     return new Promise((resolve, reject) => {
       const provider = new firebase.auth.FacebookAuthProvider();
-
       firebase
         .auth()
         .signInWithPopup(provider)
-        .then(function(result) {
-          // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-          const token = result.credential.accessToken;
-          console.log(token);
-          // The signed-in user info.
-          const { user } = result;
-          console.log(user);
-          // ...
+        .then(() => {
+          const { uid } = firebase.auth().currentUser;
+          setUID(uid);
+          localStorage.setItem('Signed', true);
+          resolve();
         })
-        .catch(function(error) {
-          console.log(error);
+        .catch(() => {
+          reject(new Error('Falha ao logar, tente novamente!'));
         });
     });
   };

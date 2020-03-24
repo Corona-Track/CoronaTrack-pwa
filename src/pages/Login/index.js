@@ -31,9 +31,33 @@ export default function Home() {
     setPassword('');
     setErrorMessage('');
   }
+
+  function validateForm(status, error) {
+    if (status) {
+      clearAll();
+      setLoading(false);
+      history.push('/');
+    } else {
+      setErrorMessage(error.message);
+      setPassword('');
+      setLoading(false);
+    }
+  }
+
   function login() {
     setLoading(true);
     Dispatch(SignInAction(email, password))
+      .then(() => {
+        validateForm(true);
+      })
+      .catch(error => {
+        validateForm(false, error);
+      });
+  }
+
+  function loginFacebook() {
+    setLoading(true);
+    Dispatch(loginWithFacebook(email, password))
       .then(() => {
         clearAll();
         setLoading(false);
@@ -44,10 +68,6 @@ export default function Home() {
         setPassword('');
         setLoading(false);
       });
-  }
-
-  function loginFacebook() {
-    Dispatch(loginWithFacebook(email, password));
   }
 
   return (

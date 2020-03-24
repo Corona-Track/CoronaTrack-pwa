@@ -1,17 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
 import Routes from './routes';
-import { store, persistor } from './store';
+import { store } from './store';
 
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <Provider store={store}>
-    <PersistGate persistor={persistor}>
-      <Routes />
-    </PersistGate>
+    <Routes />
   </Provider>,
   document.getElementById('root')
 );
