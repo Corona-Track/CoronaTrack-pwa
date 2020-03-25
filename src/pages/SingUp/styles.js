@@ -9,6 +9,12 @@ export const Container = styled.div`
   justify-content: center;
 `;
 
+export const Content = styled.div`
+  padding: 0 25px;
+`;
 export const Image = styled.img``;
 
-export const P = styled.p``;
+export const Error = styled.p`
+  color: red;
+  font-size: 30px;
+`;
