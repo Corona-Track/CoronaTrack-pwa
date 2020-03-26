@@ -101,7 +101,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 - So we all can have a better view and understanding of how you worked, try to add comments related to what you've to your commits. You can also use the checkbox in the card as a guide to that!
 
 ### step 5:
-- 🔃 Create a new pull request to the `master` branch.
+- 🔃 Create a new pull request to the `Develop` branch.
 
 ---
 ### Don't forget! *It's important to move the cards according to the lists!*
