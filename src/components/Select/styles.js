@@ -7,7 +7,7 @@ import FormControl from '@material-ui/core/FormControl';
 
 import { $gray500, $brandColorPrimary } from '../../styles/variables';
 
-export const Container = withStyles({
+export const ContainerSelect = withStyles({
   root: {
     width: '100%',
     marginBottom: '16px',

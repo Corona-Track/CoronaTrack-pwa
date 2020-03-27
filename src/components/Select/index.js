@@ -1,22 +1,15 @@
 import React, { useState } from 'react';
 import InputLabel from '@material-ui/core/InputLabel';
 
-import { Container, SelectUI } from './styles';
+import { ContainerSelect, SelectUI } from './styles';
 
-export default function Select({ label, children }) {
-  const [selected, setSelected] = useState('');
-
+export default function Select(props) {
   return (
-    <Container variant="outlined">
-      <InputLabel id="outlined-label">{label}</InputLabel>
-      <SelectUI
-        labelId="outlined-label"
-        value={selected}
-        label={label}
-        onChange={event => setSelected(event.target.value)}
-      >
-        {children}
+    <ContainerSelect variant="outlined">
+      <InputLabel id="outlined-label">{props.label}</InputLabel>
+      <SelectUI labelId="outlined-label" label={props.label} {...props}>
+        {props.children}
       </SelectUI>
-    </Container>
+    </ContainerSelect>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { MdArrowForward, MdMyLocation } from 'react-icons/md';
+import { useDispatch } from 'react-redux';
+import { MdArrowForward } from 'react-icons/md';
 import MenuItem from '@material-ui/core/MenuItem';
 
 // Components
@@ -13,7 +14,11 @@ import Loading from '../../components/Loading';
 // Styles
 import { Container, Content, Error } from './styles';
 
+// Actions
+import { createNewUser } from '../../actions/AuthActions';
+
 export default function Home() {
+  const Dispatch = useDispatch();
   const history = useHistory();
 
   const [formState, setFormState] = useState({
@@ -25,24 +30,21 @@ export default function Home() {
     sexo: '',
     riskGroup: '',
     phone: '',
-    zipCode: '',
-    street: '',
-    neighborhood: '',
-    city: '',
-    uf: '',
   });
 
   const [loading, setLoading] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState('');
 
-  const [step, setStep] = useState(0);
   const [error, setError] = useState({
     cpf: false,
     dateBirth: false,
     email: false,
     phone: false,
     password: false,
+    name: false,
+    sexo: false,
+    riskGroup: false,
   });
 
   function setState(event, state) {
@@ -54,13 +56,6 @@ export default function Home() {
       ...formState,
       [state]: value,
     });
-  }
-  function isError() {
-    const el = Object.entries(error).find(element => element[1] === true);
-    if (el) {
-      return true;
-    }
-    return false;
   }
 
   function validatePassword() {
@@ -80,23 +75,46 @@ export default function Home() {
   }
 
   function nextStep() {
-    Object.entries(formState).forEach(item => {
-      if (item[1] === '' || isError() || !validatePassword()) {
-        setErrorMessage('Por Favor preencha todos os campos!');
-      } else {
-        window.scrollTo(0, 0);
+    const isEmpty = Object.entries(formState).find(element => {
+      if (element[1] === '') {
+        return element;
       }
     });
-    // setStep(1);
-  }
-  function getLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(res => {
-        console.log(res);
+
+    if (isEmpty) {
+      setError({
+        ...error,
+        [isEmpty]: true,
       });
+    } else {
+      setLoading(true);
+
+      Dispatch(createNewUser(formState.email, formState.password, formState))
+        .then(() => {
+          setLoading(false);
+          history.push('/signUp/nextStep');
+        })
+        .catch(error => {
+          setErrorMessage(error.message);
+          setLoading(false);
+          window.scrollTo(0, 0);
+        });
     }
   }
 
+  function onBlurState(el) {
+    if (formState[el] === '') {
+      setError({
+        ...error,
+        [el]: true,
+      });
+    } else {
+      setError({
+        ...error,
+        [el]: false,
+      });
+    }
+  }
   function validateCpf(type) {
     if (type === 'blur') {
       const { cpf } = formState;
@@ -195,161 +213,104 @@ export default function Home() {
     }
   }
 
-  function submit() {
-    console.log('jonas');
-  }
-
   return (
     <Container>
       <Loading open={loading} />
       <Content>
-        {step === 0 ? (
-          <>
-            <Header title="Criar Conta" onClick={() => history.goBack()} />
-            <p className="description">Dados Pessoais</p>
-            <Input
-              required
-              label="CPF"
-              value={formState.cpf}
-              variant="outlined"
-              error={error.cpf}
-              onChange={event => setState(event, 'cpf')}
-              onBlur={() => validateCpf('blur')}
-              onFocus={() => validateCpf()}
-            />
-            <Input
-              required
-              label="Nome Completo"
-              value={formState.name}
-              variant="outlined"
-              onChange={event => setState(event, 'name')}
-            />
-            <Input
-              required
-              label="Data de Nascimento"
-              value={formState.dateBirth}
-              error={error.dateBirth}
-              variant="outlined"
-              onChange={event => setState(event, 'dateBirth')}
-              onBlur={() => validateDateBirth('blur')}
-              onFocus={() => validateDateBirth()}
-            />
+        <Header title="Criar Conta" onClick={() => history.goBack()} />
+        <p className="description">Dados Pessoais</p>
+        <Input
+          required
+          label="CPF"
+          value={formState.cpf}
+          variant="outlined"
+          error={error.cpf}
+          onChange={event => setState(event, 'cpf')}
+          onBlur={() => validateCpf('blur')}
+          onFocus={() => validateCpf()}
+        />
+        <Input
+          required
+          label="Nome Completo"
+          error={error.name}
+          value={formState.name}
+          variant="outlined"
+          onChange={event => setState(event, 'name')}
+          onBlur={() => onBlurState('name')}
+        />
+        <Input
+          required
+          label="Data de Nascimento"
+          value={formState.dateBirth}
+          error={error.dateBirth}
+          variant="outlined"
+          onChange={event => setState(event, 'dateBirth')}
+          onBlur={() => validateDateBirth('blur')}
+          onFocus={() => validateDateBirth()}
+        />
 
-            <Select label="Sexo" onChange={event => setState(event, 'sexo')}>
-              <MenuItem value="Masculino">Masculino</MenuItem>
-              <MenuItem value="Masculino">Feminino</MenuItem>
-            </Select>
+        <Select
+          error={error.sexo}
+          label="Sexo"
+          value={formState.sexo}
+          onChange={event => setState(event, 'sexo')}
+        >
+          <MenuItem value="Masculino">Masculino</MenuItem>
+          <MenuItem value="Masculino">Feminino</MenuItem>
+        </Select>
 
-            <Select label="Grupo de Risco">
-              <MenuItem value="Não">Não</MenuItem>
-              <MenuItem value="Masculino">Masculino</MenuItem>
-              <MenuItem value="Masculino">Feminino</MenuItem>
-            </Select>
+        <Select
+          label="Grupo de Risco"
+          error={error.riskGroup}
+          value={formState.riskGroup}
+          onChange={event => setState(event, 'riskGroup')}
+        >
+          <MenuItem value="Não">Não</MenuItem>
+          <MenuItem value="gravida">Gravida</MenuItem>
+        </Select>
 
-            <Input
-              required
-              label="Celular"
-              value={formState.phone}
-              variant="outlined"
-              error={error.phone}
-              onChange={event => setState(event, 'phone')}
-              onBlur={() => validatePhone('blur')}
-              onFocus={() => validatePhone()}
-            />
-            <Input
-              required
-              label="E-mail"
-              error={error.email}
-              value={formState.email}
-              variant="outlined"
-              onChange={event => setState(event, 'email')}
-              helperText={error.email && 'Digite um e-mail valido!'}
-              onBlur={() => validateEmail('blur')}
-              onFocus={() => validateEmail()}
-            />
+        <Input
+          required
+          label="Celular"
+          value={formState.phone}
+          variant="outlined"
+          error={error.phone}
+          onChange={event => setState(event, 'phone')}
+          onBlur={() => validatePhone('blur')}
+          onFocus={() => validatePhone()}
+        />
+        <Input
+          required
+          label="E-mail"
+          error={error.email}
+          value={formState.email}
+          variant="outlined"
+          onChange={event => setState(event, 'email')}
+          helperText={error.email && 'Digite um e-mail valido!'}
+          onBlur={() => validateEmail('blur')}
+          onFocus={() => validateEmail()}
+        />
 
-            <Input
-              variant="outlined"
-              label="Password"
-              value={formState.password}
-              error={error.password}
-              helperText="Digite uma senha com mais de 6 caracteres"
-              onChange={event => setState(event, 'password')}
-              onBlur={() => validatePassword('blur')}
-              onFocus={() => validateEmail()}
-            />
+        <Input
+          variant="outlined"
+          label="Password"
+          value={formState.password}
+          error={error.password}
+          helperText="Digite uma senha com mais de 6 caracteres"
+          onChange={event => setState(event, 'password')}
+          onBlur={() => validatePassword('blur')}
+          onFocus={() => validateEmail()}
+        />
 
-            {errorMessage !== '' && <Error>{errorMessage}</Error>}
-            <Button
-              variant="contained"
-              theme="primary"
-              endIcon={<MdArrowForward />}
-              onClick={() => nextStep()}
-            >
-              Proximo
-            </Button>
-          </>
-        ) : (
-          <>
-            <Header title="Criar Conta" onClick={() => setStep(0)} />
-            <p className="description">Dados de Endereço</p>
-
-            <Button
-              variant="contained"
-              theme="segundary"
-              startIcon={<MdMyLocation />}
-              onClick={() => getLocation()}
-            >
-              Minha localização
-            </Button>
-
-            <Input
-              required
-              label="Data de Nascimento"
-              value={formState.dateBirth}
-              variant="outlined"
-              onChange={event => setState(event, 'dateBirth')}
-            />
-            <Input
-              required
-              label="Data de Nascimento"
-              value={formState.dateBirth}
-              variant="outlined"
-              onChange={event => setState(event, 'dateBirth')}
-            />
-
-            <Input
-              required
-              label="Celular"
-              value={formState.phone}
-              variant="outlined"
-              onChange={event => setState(event, 'phone')}
-            />
-            <Input
-              required
-              label="E-mail"
-              value={formState.email}
-              variant="outlined"
-              onChange={event => setState(event, 'email')}
-            />
-
-            <Input
-              variant="outlined"
-              label="Password"
-              value={formState.password}
-              onChange={event => setState(event, 'password')}
-            />
-
-            <Button
-              variant="contained"
-              theme="primary"
-              endIcon={<MdArrowForward />}
-              onClick={() => submit()}
-            >
-              Proximo
-            </Button>
-          </>
-        )}
+        {errorMessage !== '' && <Error>{errorMessage}</Error>}
+        <Button
+          variant="contained"
+          theme="primary"
+          endIcon={<MdArrowForward />}
+          onClick={() => nextStep()}
+        >
+          Proximo
+        </Button>
       </Content>
     </Container>
   );

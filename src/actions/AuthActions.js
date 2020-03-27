@@ -48,7 +48,7 @@ export const setUID = uid => {
   };
 };
 
-export const createNewUser = (email, password, cpf) => {
+export const createNewUser = (email, password, newUserInfos) => {
   return dispatch => {
     return new Promise((resolve, reject) => {
       firebase
@@ -66,10 +66,15 @@ export const createNewUser = (email, password, cpf) => {
                   email: user.email,
                 },
               });
+              localStorage.setItem('Uid', user.uid);
+              const newUser = newUserInfos;
+              delete newUser.email;
+              delete newUser.password;
+
               firebase
                 .database()
                 .ref(`Users/${user.uid}`)
-                .set({ cpf });
+                .set({ ...newUser });
               resolve();
             })
             .catch(error => {
@@ -106,7 +111,6 @@ export const SignInAction = (email, password) => {
       .signInWithEmailAndPassword(email, password)
       .then(() => {
         const { uid } = firebase.auth().currentUser;
-
         setUID(uid);
         localStorage.setItem('Signed', true);
         resolve();
