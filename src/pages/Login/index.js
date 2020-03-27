@@ -114,7 +114,7 @@ export default function Home() {
         <Button
           variant="contained"
           theme="segundary"
-          onClick={() => console.log('')}
+          onClick={() => history.push('/signUp')}
         >
           Cadastre-se
         </Button>
