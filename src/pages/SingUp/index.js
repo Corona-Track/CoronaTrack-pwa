@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { MdArrowForward } from 'react-icons/md';
 import MenuItem from '@material-ui/core/MenuItem';
 
@@ -12,18 +11,12 @@ import Button from '../../components/Button';
 import Loading from '../../components/Loading';
 
 // Styles
-import { Container, Content, Error } from './styles';
-
-// Actions
-import { createNewUser } from '../../actions/AuthActions';
+import { Container, Content } from './styles';
 
 export default function Home() {
-  const Dispatch = useDispatch();
   const history = useHistory();
 
   const [formState, setFormState] = useState({
-    email: '',
-    password: '',
     name: '',
     cpf: '',
     dateBirth: '',
@@ -34,14 +27,10 @@ export default function Home() {
 
   const [loading, setLoading] = useState(false);
 
-  const [errorMessage, setErrorMessage] = useState('');
-
   const [error, setError] = useState({
     cpf: false,
     dateBirth: false,
-    email: false,
     phone: false,
-    password: false,
     name: false,
     sexo: false,
     riskGroup: false,
@@ -58,22 +47,6 @@ export default function Home() {
     });
   }
 
-  function validatePassword() {
-    const { password } = formState;
-    if (password < 6) {
-      setError({
-        ...error,
-        password: true,
-      });
-      return true;
-    }
-    setError({
-      ...error,
-      password: false,
-    });
-    return false;
-  }
-
   function nextStep() {
     const isEmpty = Object.entries(formState).find(element => {
       if (element[1] === '') {
@@ -84,21 +57,13 @@ export default function Home() {
     if (isEmpty) {
       setError({
         ...error,
-        [isEmpty]: true,
+        [isEmpty[0]]: true,
       });
     } else {
       setLoading(true);
-
-      Dispatch(createNewUser(formState.email, formState.password, formState))
-        .then(() => {
-          setLoading(false);
-          history.push('/signUp/nextStep');
-        })
-        .catch(error => {
-          setErrorMessage(error.message);
-          setLoading(false);
-          window.scrollTo(0, 0);
-        });
+      localStorage.setItem('infosTemp', JSON.stringify(formState));
+      window.scrollTo(0, 0);
+      history.push('/signUp/nextStep');
     }
   }
 
@@ -195,24 +160,6 @@ export default function Home() {
     }
   }
 
-  function validateEmail() {
-    const { email } = formState;
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const validate = re.test(String(email).toLowerCase());
-
-    if (email !== '' && !validate) {
-      setError({
-        ...error,
-        email: true,
-      });
-    } else {
-      setError({
-        ...error,
-        email: false,
-      });
-    }
-  }
-
   return (
     <Container>
       <Loading open={loading} />
@@ -279,30 +226,7 @@ export default function Home() {
           onBlur={() => validatePhone('blur')}
           onFocus={() => validatePhone()}
         />
-        <Input
-          required
-          label="E-mail"
-          error={error.email}
-          value={formState.email}
-          variant="outlined"
-          onChange={event => setState(event, 'email')}
-          helperText={error.email && 'Digite um e-mail valido!'}
-          onBlur={() => validateEmail('blur')}
-          onFocus={() => validateEmail()}
-        />
 
-        <Input
-          variant="outlined"
-          label="Password"
-          value={formState.password}
-          error={error.password}
-          helperText="Digite uma senha com mais de 6 caracteres"
-          onChange={event => setState(event, 'password')}
-          onBlur={() => validatePassword('blur')}
-          onFocus={() => validateEmail()}
-        />
-
-        {errorMessage !== '' && <Error>{errorMessage}</Error>}
         <Button
           variant="contained"
           theme="primary"

@@ -8,7 +8,7 @@ import Home from '../pages/Home';
 import Login from '../pages/Login';
 
 import SignUp from '../pages/SingUp';
-import SignUpNextStep from '../pages/SingUp/stepTwo.js';
+import SignUpNextStep from '../pages/SingUp/stepTwo';
 
 // Services
 import history from '../services/history';

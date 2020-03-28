@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { FaFacebookSquare } from 'react-icons/fa';
@@ -69,6 +69,14 @@ export default function Home() {
         setLoading(false);
       });
   }
+
+  useEffect(() => {
+    const loginType = localStorage.getItem('loginType') || null;
+
+    if (loginType) {
+      return history.push('/signUp');
+    }
+  }, [history]);
 
   return (
     <Container>

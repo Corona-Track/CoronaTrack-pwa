@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import InputLabel from '@material-ui/core/InputLabel';
 
 import { ContainerSelect, SelectUI } from './styles';

@@ -60,13 +60,22 @@ export const createNewUser = (email, password, newUserInfos) => {
             .createUserWithEmailAndPassword(email, password)
             .then(({ user }) => {
               setUID(user.uid);
-              dispatch({
-                type: 'SET_INFOS',
-                payload: {
-                  email: user.email,
+              dispatch(
+                {
+                  type: 'SET_INFOS',
+                  payload: {
+                    email: user.email,
+                  },
                 },
-              });
+                {
+                  type: 'SET_UID',
+                  payload: {
+                    uid: user.uid,
+                  },
+                }
+              );
               localStorage.setItem('Uid', user.uid);
+
               const newUser = newUserInfos;
               delete newUser.email;
               delete newUser.password;
@@ -75,6 +84,8 @@ export const createNewUser = (email, password, newUserInfos) => {
                 .database()
                 .ref(`Users/${user.uid}`)
                 .set({ ...newUser });
+
+              localStorage.setItem('Signed', true);
               resolve();
             })
             .catch(error => {
@@ -147,8 +158,19 @@ export const loginWithFacebook = () => {
         .then(() => {
           const { uid } = firebase.auth().currentUser;
           setUID(uid);
-          localStorage.setItem('Signed', true);
-          resolve();
+          firebase
+            .database()
+            .ref(`Users/${uid}`)
+            .once('value')
+            .then(snapshot => {
+              snapshot.forEach(childItem => {
+                if (!childItem) {
+                  return localStorage.setItem('loginType', 'facebook');
+                }
+                localStorage.setItem('Signed', true);
+                resolve();
+              });
+            });
         })
         .catch(() => {
           reject(new Error('Falha ao logar, tente novamente!'));
