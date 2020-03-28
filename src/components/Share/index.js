@@ -43,8 +43,8 @@ export default ({ active = false, onClose = () => {} }) => {
   return (
     <Wrapper active={active}>
       <Modal>
-        <Head>
-          <FiX onClick={onClose} style={{ fontSize: 20, color: '#03A39B' }} />
+        <Head onClick={onClose}>
+          <FiX style={{ fontSize: 20, color: '#03A39B' }} />
         </Head>
         <Title>Convide seus amigos</Title>
         <Description>
