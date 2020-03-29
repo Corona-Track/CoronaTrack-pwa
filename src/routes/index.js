@@ -9,6 +9,7 @@ import symptoms from '../pages/Symptoms';
 import Login from '../pages/Login';
 
 import SignUp from '../pages/SingUp';
+import SignUpNextStep from '../pages/SingUp/stepTwo';
 
 // Services
 import history from '../services/history';
@@ -26,6 +27,7 @@ export default function Routes() {
         )}
         <Route path="/login" exact component={Login} />
         <Route path="/signUp" exact component={SignUp} />
+        <Route path="/signUp/nextStep" exact component={SignUpNextStep} />
       </Switch>
       <GlobalStyle />
     </Router>

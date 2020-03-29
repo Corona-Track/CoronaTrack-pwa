@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+
 import { GoEyeClosed, GoEye } from 'react-icons/go';
 
 import { InputAdornment, IconButton } from '@material-ui/core';
-
 import { InputText } from './styles';
 
 export default function Input(props) {
+  const { label } = props;
   const [showPassword, setShowPassword] = useState(true);
 
   function IconEye() {
@@ -24,9 +25,9 @@ export default function Input(props) {
   return (
     <InputText
       {...props}
-      type={props.label === 'Password' && showPassword ? 'password' : 'text'}
+      type={label === 'Password' && showPassword ? 'password' : 'text'}
       InputProps={{
-        endAdornment: props.label === 'Password' ? IconEye() : '',
+        endAdornment: label === 'Password' ? IconEye() : '',
       }}
     />
   );

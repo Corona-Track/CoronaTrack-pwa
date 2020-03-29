@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { FaFacebookSquare } from 'react-icons/fa';
@@ -70,6 +70,14 @@ export default function Home() {
       });
   }
 
+  useEffect(() => {
+    const loginType = localStorage.getItem('loginType') || null;
+
+    if (loginType) {
+      return history.push('/signUp');
+    }
+  }, [history]);
+
   return (
     <Container>
       <Loading open={loading} />
@@ -114,7 +122,7 @@ export default function Home() {
         <Button
           variant="contained"
           theme="segundary"
-          onClick={() => console.log('')}
+          onClick={() => history.push('/signUp')}
         >
           Cadastre-se
         </Button>
