@@ -6,7 +6,7 @@ export const useStyles = makeStyles((theme) => ({
       paddingLeft: '2rem',
       paddingRight: '2rem'
     },
-    symptomsTitle: {
+    symptomsLabel: {
       color: $gray600,
       marginTop: '3rem'
     },

@@ -1,4 +1,5 @@
 import React, {Fragment} from 'react';
+import PropTypes from 'prop-types';
 import { useStyles } from './styles';
 import Container from '@material-ui/core/Container';
 import FormControl from '@material-ui/core/FormControl';
@@ -9,7 +10,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '../../components/Button';
 import CheckBox from '../../components/CheckBox';
 
-export default function CheckboxesGroup() {
+export default function Symptoms({submitSymptons}) {
   const classes = useStyles();
   const [state, setState] = React.useState({
     coriza: false,
@@ -26,6 +27,10 @@ export default function CheckboxesGroup() {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
 
+  const submitSymptoms = (state) => {
+    submitSymptons(state)
+  }
+
   const { 
     coriza,
     dorcabeca,
@@ -40,7 +45,7 @@ export default function CheckboxesGroup() {
   return (
     <Fragment>
       <Container className={classes.symptoms}>
-        <p className={classes.symptomsTitle}>SINTOMÁTICO</p>    
+        <p className={classes.symptomsLabel}>SINTOMÁTICO</p>    
         <h1 className={classes.symptomsQuestion}>Você está sentindo algum dos sintomas abaixo?</h1>
         <FormControl component="fieldset" >
           <FormGroup className={classes.formControl}>
@@ -78,10 +83,16 @@ export default function CheckboxesGroup() {
             />
           </FormGroup>
         </FormControl>
-        <Button className={classes.symptomsBtn} variant="contained" theme="primary" onClick={() => {}}>
+        <Button className={classes.symptomsBtn} variant="contained" theme="primary" onClick={() => submitSymptoms(state)}>
             Continuar
         </Button>
       </Container>
     </Fragment>
   );
+};
+
+Symptoms.displayName = 'Symptoms';
+
+Symptoms.propTypes = {
+  submitSymptons: PropTypes.func
 };
