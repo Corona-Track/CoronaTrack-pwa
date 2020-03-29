@@ -8,9 +8,11 @@ export const useStyles = makeStyles((theme) => ({
     },
     chronicDiseasesLabel: {
       color: $gray600,
-      marginTop: '3rem'
+      marginTop: '3rem',
+      fontFamily: "'Prompt', sans-serif",
     },
     chronicDiseasesQuestion: {
+      fontFamily: "'Prompt', sans-serif",
       fontWeight: 500,
       fontSize: '1.3rem',
       lineHeight: '2rem',
@@ -18,7 +20,11 @@ export const useStyles = makeStyles((theme) => ({
     },
     formControl: {
       color: $gray700,
-      marginTop: '2.8rem'
+      marginTop: '2.8rem',
+      '& label > span:nth-child(2)': {
+        fontWeight: 500,
+        fontFamily: "'Prompt', sans-serif",
+      }
     },
     chronicDiseasesBtn: {
       marginTop: '2rem'
