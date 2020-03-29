@@ -28,14 +28,16 @@ export default function Result() {
             <Box textAlign="center">RESULTADO</Box>
           </Typography>
           <ResultStatus result="baixo"/>
-          <video width="320" height="240" controls="controls" autoplay="autoplay">
-            <source src="video/QDEOL.mp4" type="video/mp4" />
-          </video>
+          <Box component="div" textAlign="center">
+            <video width="320" height="240" controls="controls" autoplay="autoplay">
+                <source src="video/QDEOL.mp4" type="video/mp4" />
+            </video>
+          </Box>
           <Button
             variant="contained"
             theme="primary"
             onClick={() => goToMap()}
-            className={classes.chronicDiseasesBtn}
+            className={classes.resultBtn}
           >
             VEJA NO MAPA
           </Button>
