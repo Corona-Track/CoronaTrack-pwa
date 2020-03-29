@@ -94,5 +94,5 @@ export default function Symptoms({submitSymptons}) {
 Symptoms.displayName = 'Symptoms';
 
 Symptoms.propTypes = {
-  submitSymptons: PropTypes.func
+  submitSymptons: PropTypes.func.isRequired
 };
