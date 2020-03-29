@@ -8,6 +8,9 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
+`;
+
+export const Content = styled.div`
   padding: 0 25px;
 
   p.title {
@@ -25,10 +28,18 @@ export const Container = styled.div`
     line-height: 26px;
     text-align: center;
     color: #4f4f4f;
-    margin-top: 40px;
+    margin: 40px 0;
   }
 `;
 
 export const Image = styled.img``;
 
-export const P = styled.p``;
+export const ButtonOption = styled.button`
+  border: 0;
+  background: transparent;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #bdbdbd;
+  margin: 32px 0;
+`;

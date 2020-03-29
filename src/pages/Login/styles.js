@@ -24,7 +24,6 @@ export const Error = styled.p`
 `;
 
 export const Line = styled.div`
-  color: red;
   font-size: 30px;
   display: flex;
   align-items: center;

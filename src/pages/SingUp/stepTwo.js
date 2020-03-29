@@ -56,55 +56,30 @@ export default function Home() {
     });
   }
 
-  function nextStep() {
-    const isEmpty = Object.entries(formState).find(element => {
-      if (element[1] === '') {
-        return element[0];
-      }
-    });
-    if (isEmpty[0]) {
-      setError({
-        ...error,
-        [isEmpty[0]]: true,
-      });
-    } else {
-      window.scrollTo(0, 0);
-    }
-  }
   function getLocation() {
+    // Pedi permisão de acessar a localização
     if (navigator.geolocation) {
-      // navigator.geolocation.getCurrentPosition(
-      //   ({ coords: { latitude, longitude } }) => {
-      //     Geocode.setApiKey('AIzaSyDNzvzwsgC-lNG2Wsesd2bqTOHvccr8Tqo');
-      //     Geocode.setLanguage('pt-br');
-      //     Geocode.fromLatLng(latitude, longitude).then(
-      //       response => {
-      //         const address = response.results[0].formatted_address;
-      //         console.log(address);
-      //       },
-      //       error => {
-      //         console.error(error);
-      //       }
-      //     );
-      //   }
-      // );
+      navigator.geolocation.getCurrentPosition(
+        ({ coords: { latitude, longitude } }) => {
+          console.log(latitude);
+          console.log(longitude);
+          // Geocode.setApiKey('AIzaSyDNzvzwsgC-lNG2Wsesd2bqTOHvccr8Tqo');
+          // Geocode.setLanguage('pt-br');
+          // Geocode.fromLatLng(latitude, longitude).then(
+          //   response => {
+          //     const address = response.results[0].formatted_address;
+          //     console.log(address);
+          //   },
+          //   error => {
+          //     console.error(error);
+          //   }
+          // );
+        }
+      );
       return true;
     }
     alert('Precisamos da sua localização para o app funcionar da forma certa!');
     return false;
-  }
-  function onBlurState(el) {
-    if (formState[el] === '') {
-      setError({
-        ...error,
-        [el]: true,
-      });
-    } else {
-      setError({
-        ...error,
-        [el]: false,
-      });
-    }
   }
 
   function validateEmail() {
