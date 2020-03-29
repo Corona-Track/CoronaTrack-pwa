@@ -52,6 +52,7 @@ export default function Home() {
       if (element[1] === '') {
         return element;
       }
+      return false;
     });
 
     if (isEmpty) {

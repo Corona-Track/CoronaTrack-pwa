@@ -16,7 +16,7 @@ export default createGlobalStyle`
       -webkit-font-smoothing: antialiased;
     }
 
-    body, input, button {
+    body, input, button, p, h1 {
       font-family: 'Prompt', sans-serif;
     }
 

@@ -116,36 +116,38 @@ export const createNewUser = (email, password, newUserInfos) => {
 };
 
 export const SignInAction = (email, password) => {
-  return new Promise((resolve, reject) => {
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(() => {
-        const { uid } = firebase.auth().currentUser;
-        setUID(uid);
-        localStorage.setItem('Signed', true);
-        resolve();
-      })
-      .catch(error => {
-        let errorMessage = '';
-        switch (error.code) {
-          case 'auth/invalid-email':
-            errorMessage = 'Email inválido!';
-            break;
-          case 'auth/user-disabled':
-            errorMessage = 'Seu usuário está desativado!';
-            break;
-          case 'auth/user-not-found':
-            errorMessage = 'Não existe este usuário!';
-            break;
-          case 'auth/wrong-password':
-            errorMessage = 'E-mail e/ou senha errados!';
-            break;
-          default:
-        }
-        reject(new Error(errorMessage));
-      });
-  });
+  return dispatch => {
+    return new Promise((resolve, reject) => {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(() => {
+          const { uid } = firebase.auth().currentUser;
+          setUID(uid);
+          localStorage.setItem('Signed', true);
+          resolve();
+        })
+        .catch(error => {
+          let errorMessage = '';
+          switch (error.code) {
+            case 'auth/invalid-email':
+              errorMessage = 'Email inválido!';
+              break;
+            case 'auth/user-disabled':
+              errorMessage = 'Seu usuário está desativado!';
+              break;
+            case 'auth/user-not-found':
+              errorMessage = 'Não existe este usuário!';
+              break;
+            case 'auth/wrong-password':
+              errorMessage = 'E-mail e/ou senha errados!';
+              break;
+            default:
+          }
+          reject(new Error(errorMessage));
+        });
+    });
+  };
 };
 
 export const loginWithFacebook = () => {
