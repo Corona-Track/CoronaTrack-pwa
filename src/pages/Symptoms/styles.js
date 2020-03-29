@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { $gray600, $gray700 } from '../../styles/variables';
 
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles(() => ({
     symptoms : {
       paddingLeft: '2rem',
       paddingRight: '2rem'
@@ -18,7 +18,11 @@ export const useStyles = makeStyles((theme) => ({
     },
     formControl: {
       color: $gray700,
-      marginTop: '2.8rem'
+      marginTop: '2.8rem',
+      '& label > span:nth-child(2)': {
+        fontWeight: 500,
+        fontFamily: "'Prompt', sans-serif",
+      }
     },
     symptomsBtn: {
       marginTop: '2rem'
