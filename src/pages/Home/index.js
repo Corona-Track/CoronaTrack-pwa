@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 // Assets
-import logo from '../../assets/images/logo.png';
+import logo from '../../assets/images/sintomas.png';
 
 import { signOut } from '../../actions/AuthActions';
 // Styles
