@@ -11,7 +11,7 @@ import Button from '../../components/Button';
 // Result Components
 import ResultStatus from './components/ResultStatus';
 
-export default function Result() {
+export default function Result({result}) {
     const classes = useStyles();
 
     const goToMap = () => {
@@ -27,7 +27,7 @@ export default function Result() {
           >
             <Box textAlign="center">RESULTADO</Box>
           </Typography>
-          <ResultStatus result="baixo"/>
+          <ResultStatus result={result}/>
           <Box component="div" textAlign="center">
             <video width="320" height="240" controls="controls" autoplay="autoplay">
                 <source src="video/QDEOL.mp4" type="video/mp4" />
