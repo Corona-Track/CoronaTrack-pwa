@@ -13,13 +13,14 @@ export default function ResultStatus({result}) {
   return (
     <Container className={classes.resultStatus}>
       <Typography
-        variant="subtitle1"
+        variant="subtitle2"
         component="h2"
+        className={classes.resultStatusTitle}
       >
         <Box textAlign="center">Seu grau de risco é</Box>
       </Typography>
       <Typography
-          variant="subtitle1"
+          variant="subtitle3"
           component="h3"
           className={classes.resultStatusCalculated}
         >
@@ -32,12 +33,12 @@ export default function ResultStatus({result}) {
           </Box>
         </Typography>
       <Typography
-        variant="subtitle1"
+        variant="subtitle4"
         component="p"
         className={classes.resultStatusDescription}
       >
         {description.DESCRIPTION_PREFIX}
-        <Typography
+        <Box
           component="span"
           color={resultColor}
           className={classes.resultStatusDescriptionFinalStatus}
@@ -48,7 +49,7 @@ export default function ResultStatus({result}) {
             >
               risco é {result}
           </Box>
-        </Typography>        
+        </Box>        
         {description.DESCRIPTION_SUFIX}
       </Typography>
     </Container>
