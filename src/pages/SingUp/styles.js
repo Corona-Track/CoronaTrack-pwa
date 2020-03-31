@@ -8,13 +8,18 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: 30px;
 `;
 
 export const Content = styled.div`
   padding: 0 25px;
-`;
-export const Image = styled.img`
-  margin-bottom: 32px;
+  p.description {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #828282;
+    margin: 40px 0 18px 0;
+  }
 `;
 
 export const Error = styled.p`
@@ -24,6 +29,7 @@ export const Error = styled.p`
 `;
 
 export const Line = styled.div`
+  color: red;
   font-size: 30px;
   display: flex;
   align-items: center;
@@ -32,14 +38,5 @@ export const Line = styled.div`
     width: 100%;
     height: 2px;
     background: #e0e0e0;
-  }
-  p {
-    font-weight: normal;
-    font-size: 15px;
-    line-height: 17px;
-    text-align: center;
-    color: #bdbdbd;
-    margin: 0 10px;
-    text-transform: uppercase;
   }
 `;
