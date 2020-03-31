@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+<<<<<<< HEAD
 import Iframe from 'react-iframe';
+=======
+import Layout from '../layout';
+>>>>>>> a8ff0dbd524b2bcc0deebf303c631f71b000faa0
 
 // Actions
 import { verifySteps, symptEval } from '../../actions/DegreeRiskActions';
@@ -31,9 +35,10 @@ export default function Home() {
     if (uid) {
       Dispatch(verifySteps(uid, history));
     }
-  });
+  }, []);
 
   return (
+<<<<<<< HEAD
     <Container>
       {/* <Image src={logo} alt="Logo" />
       <h1>Home</h1>
@@ -47,5 +52,14 @@ export default function Home() {
         height="100%"
       />
     </Container>
+=======
+    <Layout>
+      <Container>
+        <Image src={logo} alt="Logo" />
+        <h1>Home</h1>
+        <P onClick={() => signOute()}>Sair</P>
+      </Container>
+    </Layout>
+>>>>>>> a8ff0dbd524b2bcc0deebf303c631f71b000faa0
   );
 }

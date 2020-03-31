@@ -1,10 +1,10 @@
 import firebase from '../FirebaseConnection';
 
-export const verifySteps = (uid, history) => {
+export const verifySteps = (uid, history, path) => {
   return dispatch => {
     firebase
       .database()
-      .ref(`healthScreening/${uid}`)
+      .ref(`healthScreening/${uid}${path}`)
       .once('value', snapshot => {
         const { contactWithSuspect, contactWithConfirmed } = snapshot.val();
 
@@ -89,7 +89,7 @@ export const symptEval = uid => {
   return dispatch => {
     firebase
       .database()
-      .ref(`healthScreening/${uid}`) // muda depois para percorrer todos
+      .ref(`healthScreening/${uid}/sintomas`) // muda depois para percorrer todos
       .once('value', snapshot => {
         // const amountPeople = snapshot.numChildren();
 
@@ -138,7 +138,7 @@ export const symptEval = uid => {
 
         firebase
           .database()
-          .ref(`healthScreening/${uid}`)
+          .ref(`healthScreening/${uid}/sintomas`)
           .update({ grauDeRisco })
           .then(() => {
             console.log('ok');

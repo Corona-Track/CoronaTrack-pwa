@@ -28,7 +28,7 @@ export default function Symptoms({ submitSymptons }) {
   };
 
   const submitSymptoms = state => {
-    submitSymptons(state);
+    console.log(state);
   };
 
   const {
