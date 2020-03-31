@@ -9,6 +9,7 @@ import Home from '../pages/Home';
 import Suspects from '../pages/Diagnosis/Suspects';
 import Confirmed from '../pages/Diagnosis/Confirmed';
 import Diagnosis from '../pages/Diagnosis';
+import Symptoms from '../pages/Symptoms';
 
 import Login from '../pages/Login';
 
@@ -38,6 +39,8 @@ export default function Routes() {
           component={Confirmed}
           isPrivate
         />
+
+        <Route path="/sintomas" exact component={Symptoms} isPrivate />
 
         <Route path="/login" exact component={Login} />
         <Route path="/signUp" exact component={SignUp} />
