@@ -6,17 +6,19 @@ export const verifySteps = (uid, history) => {
       .database()
       .ref(`Users/${uid}`)
       .once('value', snapshot => {
-        const { contactWithSuspect, contactWithConfirmed } = snapshot.val();
-        if (contactWithSuspect && !contactWithConfirmed) {
-          history.push('/diagnostico/confirmados');
-          return;
-        }
-        if (
-          (!contactWithSuspect && contactWithConfirmed) ||
-          (!contactWithSuspect && !contactWithConfirmed)
-        ) {
-          history.push('/diagnostico/suspeitos');
-          return;
+        if (snapshot.val()) {
+          const { contactWithSuspect, contactWithConfirmed } = snapshot.val();
+          if (contactWithSuspect && !contactWithConfirmed) {
+            history.push('/diagnostico/confirmados');
+            return;
+          }
+          if (
+            (!contactWithSuspect && contactWithConfirmed) ||
+            (!contactWithSuspect && !contactWithConfirmed)
+          ) {
+            history.push('/diagnostico/suspeitos');
+            return;
+          }
         }
 
         history.push('/');
