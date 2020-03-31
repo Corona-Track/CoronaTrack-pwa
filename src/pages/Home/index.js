@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import Layout from '../layout';
 
 // Actions
 import { verifySteps } from '../../actions/DegreeRiskActions';
@@ -25,13 +26,15 @@ export default function Home() {
     if (uid) {
       Dispatch(verifySteps(uid, history));
     }
-  });
+  }, []);
 
   return (
-    <Container>
-      <Image src={logo} alt="Logo" />
-      <h1>Home</h1>
-      <P onClick={() => signOute()}>Sair</P>
-    </Container>
+    <Layout>
+      <Container>
+        <Image src={logo} alt="Logo" />
+        <h1>Home</h1>
+        <P onClick={() => signOute()}>Sair</P>
+      </Container>
+    </Layout>
   );
 }
