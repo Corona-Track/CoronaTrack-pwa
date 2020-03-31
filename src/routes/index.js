@@ -10,6 +10,8 @@ import Suspects from '../pages/Diagnosis/Suspects';
 import Confirmed from '../pages/Diagnosis/Confirmed';
 import Diagnosis from '../pages/Diagnosis';
 
+import ChronicDiseases from '../pages/ChronicDiseases';
+
 import Login from '../pages/Login';
 
 import SignUp from '../pages/SingUp';
@@ -33,12 +35,18 @@ export default function Routes() {
           isPrivate
         />
         <Route
+          path="/doencas/cronicas"
+          exact
+          component={ChronicDiseases}
+          isPrivate
+        />
+
+        <Route
           path="/diagnostico/confirmados"
           exact
           component={Confirmed}
           isPrivate
         />
-
         <Route path="/login" exact component={Login} />
         <Route path="/signUp" exact component={SignUp} />
         <Route path="/signUp/nextStep" exact component={SignUpNextStep} />

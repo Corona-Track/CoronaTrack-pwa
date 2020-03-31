@@ -125,6 +125,8 @@ export const SignInAction = (email, password) => {
           const { uid } = firebase.auth().currentUser;
           setUID(uid);
           localStorage.setItem('Signed', true);
+
+          localStorage.setItem('Uid', uid);
           resolve();
         })
         .catch(error => {
@@ -160,6 +162,7 @@ export const loginWithFacebook = () => {
         .then(() => {
           const { uid } = firebase.auth().currentUser;
           setUID(uid);
+          localStorage.setItem('Uid', uid);
           firebase
             .database()
             .ref(`Users/${uid}`)

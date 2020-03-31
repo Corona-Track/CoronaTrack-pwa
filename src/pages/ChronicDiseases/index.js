@@ -5,13 +5,22 @@ import Container from '@material-ui/core/Container';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { useStyles } from './styles';
+
+// Actions
+import { AddInDb } from '../../actions/DegreeRiskActions';
 
 // Components
 import Button from '../../components/Button';
 import CheckBox from '../../components/CheckBox';
 
 export default function ChronicDiseases() {
+  const history = useHistory();
+  const Dispatch = useDispatch();
+
   const classes = useStyles();
   const [state, setState] = React.useState({
     diabetes: false,
@@ -31,7 +40,21 @@ export default function ChronicDiseases() {
 
   const submitChronicDiseases = state => {
     // submitChronicDiseases(state);
-    alert(...state);
+    let newState = {};
+    Object.entries(state).forEach(item => {
+      newState = {
+        ...newState,
+        [item[0]]: item[1] ? 1 : 0,
+      };
+    });
+
+    const uid = localStorage.getItem('Uid');
+
+    if (uid) {
+      Dispatch(AddInDb(uid, newState)).then(() => {
+        history.push('/');
+      });
+    }
   };
 
   const {
