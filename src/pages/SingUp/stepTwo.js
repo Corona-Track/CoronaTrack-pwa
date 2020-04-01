@@ -6,7 +6,7 @@ import axios from 'axios';
 
 import { useHistory } from 'react-router-dom';
 import { MdArrowForward, MdMyLocation } from 'react-icons/md';
-import { createNewUser } from '../../actions/AuthActions';
+import { createNewUser, setPosition } from '../../actions/AuthActions';
 
 // Components
 import Header from '../../components/Header';
@@ -32,6 +32,8 @@ export default function Home() {
   });
 
   const [loading, setLoading] = useState(false);
+
+  const [location, setLocation] = useState('');
 
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -61,25 +63,16 @@ export default function Home() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         ({ coords: { latitude, longitude } }) => {
-          console.log(latitude);
-          console.log(longitude);
-          // Geocode.setApiKey('AIzaSyDNzvzwsgC-lNG2Wsesd2bqTOHvccr8Tqo');
-          // Geocode.setLanguage('pt-br');
-          // Geocode.fromLatLng(latitude, longitude).then(
-          //   response => {
-          //     const address = response.results[0].formatted_address;
-          //     console.log(address);
-          //   },
-          //   error => {
-          //     console.error(error);
-          //   }
-          // );
+          const coords = {
+            latitude,
+            longitude,
+          };
+          setLocation(coords);
         }
       );
-      return true;
+    } else {
+      setLocation('');
     }
-    alert('Precisamos da sua localização para o app funcionar da forma certa!');
-    return false;
   }
 
   function validateEmail() {
@@ -142,6 +135,8 @@ export default function Home() {
   }
 
   function createUser() {
+    const infosTemp = localStorage.getItem('infosTemp') || '{}';
+
     const isEmpty = Object.entries(formState).find(element => {
       if (element[1] === '') {
         return element;
@@ -153,11 +148,26 @@ export default function Home() {
         ...error,
         [isEmpty[0]]: true,
       });
+    } else if (location === '') {
+      setErrorMessage(
+        'Precisamos da sua localização para o app funcionar da forma certa!'
+      );
     } else {
-      Dispatch(createNewUser(formState.email, formState.password, formState))
-        .then(() => {
-          setLoading(true);
-          history.push('/');
+      const newForm = {
+        ...JSON.parse(infosTemp),
+        ...formState,
+      };
+
+      Dispatch(createNewUser(formState.email, formState.password, newForm))
+        .then(({ uid }) => {
+          Dispatch(setPosition(uid, location))
+            .then(() => {
+              setLoading(true);
+              history.push('/diagnostico/suspeitos');
+            })
+            .catch(() => {
+              setLoading(false);
+            });
         })
         .catch(error => {
           setErrorMessage(error.message);

@@ -1,34 +1,35 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-<<<<<<< HEAD
+import { FiShare2 } from 'react-icons/fi';
+
 import Iframe from 'react-iframe';
-=======
-import Layout from '../layout';
->>>>>>> a8ff0dbd524b2bcc0deebf303c631f71b000faa0
+
+// Components
+import Share from '../../components/Share';
+import Button from '../../components/Button';
+import Header from '../../components/Header';
 
 // Actions
-import { verifySteps, symptEval } from '../../actions/DegreeRiskActions';
-// import { signOut } from '../../actions/AuthActions';
-
-// Assets
-// import logo from '../../assets/images/logo.png';
+import { verifySteps } from '../../actions/DegreeRiskActions';
 
 // Styles
-import { Container } from './styles';
+import { Container, ShareContainer } from './styles';
 
 export default function Home() {
   const history = useHistory();
   const Dispatch = useDispatch();
 
-  // function signOute() {
-  //   signOut();
-  //   history.push('/login');
-  // }
+  const [shareActive, setShareActive] = useState(false);
+
   const uid = localStorage.getItem('Uid');
 
-  function CalcsymptEval() {
-    Dispatch(symptEval(uid));
+  // function CalcsymptEval() {
+  //   Dispatch(symptEval(uid));
+  // }
+
+  function handleShare() {
+    setShareActive(!shareActive);
   }
 
   useEffect(() => {
@@ -38,28 +39,26 @@ export default function Home() {
   }, []);
 
   return (
-<<<<<<< HEAD
-    <Container>
-      {/* <Image src={logo} alt="Logo" />
-      <h1>Home</h1>
-      <P onClick={() => signOute()}>Sair</P> */}
-      <div>
-        <h1 onClick={() => CalcsymptEval()}>Calcular</h1>
-      </div>
-      <Iframe
-        url="http://site58987541.westus2.cloudapp.azure.com:81/epidemia/Grafico/Map?modulo=Geociencia&acesso_publico=S&acesso_mobile=S"
-        width="100%"
-        height="100%"
-      />
-    </Container>
-=======
-    <Layout>
+    <>
       <Container>
-        <Image src={logo} alt="Logo" />
-        <h1>Home</h1>
-        <P onClick={() => signOute()}>Sair</P>
+        <Header />
+        <Share active={shareActive} onClose={handleShare} />
+        <Iframe
+          url="http://site58987541.westus2.cloudapp.azure.com:81/epidemia/Grafico/Map?modulo=Geociencia&acesso_publico=S&acesso_mobile=S"
+          width="100%"
+          height="100%"
+        />
+        <ShareContainer>
+          <Button
+            variant="contained"
+            theme="segundary"
+            endIcon={<FiShare2 />}
+            onClick={() => handleShare()}
+          >
+            Compartilhar
+          </Button>
+        </ShareContainer>
       </Container>
-    </Layout>
->>>>>>> a8ff0dbd524b2bcc0deebf303c631f71b000faa0
+    </>
   );
 }

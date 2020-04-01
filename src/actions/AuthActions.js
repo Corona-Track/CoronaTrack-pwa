@@ -48,6 +48,23 @@ export const setUID = uid => {
   };
 };
 
+export const setPosition = (uid, coords) => {
+  return dispatch => {
+    return new Promise((resolve, reject) => {
+      firebase
+        .database()
+        .ref(`tracking/${uid}`)
+        .set({ ...coords })
+        .then(() => {
+          resolve();
+        })
+        .catch(() => {
+          reject();
+        });
+    });
+  };
+};
+
 export const createNewUser = (email, password, newUserInfos) => {
   return dispatch => {
     return new Promise((resolve, reject) => {
@@ -86,7 +103,7 @@ export const createNewUser = (email, password, newUserInfos) => {
                 .set({ ...newUser });
 
               localStorage.setItem('Signed', true);
-              resolve();
+              resolve({ uid: user.uid });
             })
             .catch(error => {
               let errorMessage = '';
@@ -168,13 +185,11 @@ export const loginWithFacebook = () => {
             .ref(`Users/${uid}`)
             .once('value')
             .then(snapshot => {
-              snapshot.forEach(childItem => {
-                if (!childItem) {
-                  return localStorage.setItem('loginType', 'facebook');
-                }
-                localStorage.setItem('Signed', true);
+              if (!snapshot.val()) {
                 resolve();
-              });
+                localStorage.setItem('loginType', 'facebook');
+                resolve();
+              }
             });
         })
         .catch(() => {

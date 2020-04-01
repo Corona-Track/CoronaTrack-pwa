@@ -61,7 +61,7 @@ export default function Home() {
       .then(() => {
         clearAll();
         setLoading(false);
-        history.push('/');
+        history.push('/diagnostico/suspeitos');
       })
       .catch(error => {
         setErrorMessage(error.message);

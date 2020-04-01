@@ -50,7 +50,7 @@ export default function Suspects() {
           variant="contained"
           theme="segundary"
           background="#EB5757"
-          onClick={() => addSintomas(0)}
+          onClick={() => addSintomas('Não')}
         >
           Não
         </Button>
@@ -58,7 +58,7 @@ export default function Suspects() {
           variant="contained"
           theme="segundary"
           background="#27AE60"
-          onClick={() => addSintomas(1)}
+          onClick={() => addSintomas('Sim')}
         >
           Sim
         </Button>

@@ -2,13 +2,11 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
+  width: 100%;
   height: 80px;
   background-color: #fff;
   padding: 20px 30px;
   justify-content: space-between;
-  img {
-    height: 60px;
-  }
 `;
 
 export const H1 = styled.h1`
@@ -86,4 +84,9 @@ export const Version = styled.p`
   font-size: 12px;
   color: #bdbdbd;
   margin-top: 43px;
+`;
+
+export const Image = styled.img`
+  width: auto;
+  height: auto;
 `;

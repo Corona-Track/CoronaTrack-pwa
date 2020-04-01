@@ -6,6 +6,11 @@ import {
   FaTwitterSquare,
 } from 'react-icons/fa';
 import {
+  FacebookShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+} from 'react-share';
+import {
   Wrapper,
   Modal,
   Head,
@@ -15,14 +20,9 @@ import {
   ContainerSocialMedia,
   ContentSocialMedia,
 } from './style';
-import {
-  FacebookShareButton,
-  TwitterShareButton,
-  WhatsappShareButton,
-} from 'react-share';
 
 export default ({ active = false, onClose = () => {} }) => {
-  let [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useState(false);
   useEffect(() => {
     if (!active) {
       setCopied(false);

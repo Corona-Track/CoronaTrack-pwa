@@ -9,7 +9,8 @@ import { STATUS } from './constants';
 export default function ResultStatus({ result }) {
   const classes = useStyles();
   const resultColor = STATUS[result].COLOR;
-  const description = STATUS[result];
+  const Results = STATUS[result];
+
   return (
     <Container className={classes.resultStatus}>
       <Typography
@@ -25,7 +26,7 @@ export default function ResultStatus({ result }) {
         className={classes.resultStatusCalculated}
       >
         <Box textAlign="center" color={resultColor} fontWeight="fontWeightBold">
-          {result}
+          {Results.TITLE}
         </Box>
       </Typography>
       <Typography
@@ -33,7 +34,7 @@ export default function ResultStatus({ result }) {
         component="p"
         className={classes.resultStatusDescription}
       >
-        {description.DESCRIPTION_PREFIX}
+        {Results.DESCRIPTION_PREFIX}
         <Box
           component="span"
           color={resultColor}
@@ -43,7 +44,7 @@ export default function ResultStatus({ result }) {
             risco é {result}
           </Box>
         </Box>
-        {description.DESCRIPTION_SUFIX}
+        {Results.DESCRIPTION_SUFIX}
       </Typography>
     </Container>
   );

@@ -1,34 +1,49 @@
-import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
 import Container from '@material-ui/core/Container';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { useStyles } from './styles';
+
+// Actions
+import { AddInDb, verifySteps } from '../../actions/DegreeRiskActions';
 
 // Components
 import Button from '../../components/Button';
 import CheckBox from '../../components/CheckBox';
 
-export default function Symptoms({ submitSymptons }) {
+export default function Symptoms() {
+  const history = useHistory();
+  const Dispatch = useDispatch();
+
   const classes = useStyles();
   const [state, setState] = React.useState({
-    coriza: false,
-    dorcabeca: false,
-    tosse: false,
-    dorgarganta: false,
-    febre: false,
-    malestargeral: false,
-    dificuldaderespirar: false,
-    diarreia: false,
+    coriza: 0,
+    dorcabeca: 0,
+    tosse: 0,
+    dorgarganta: 0,
+    febre: 0,
+    doresmusculares: 0,
+    dificuldaderespirar: 0,
+    diarreia: 0,
   });
 
   const handleChange = event => {
-    setState({ ...state, [event.target.name]: event.target.checked });
+    setState({ ...state, [event.target.name]: event.target.checked ? 1 : 0 });
   };
 
-  const submitSymptoms = state => {
-    console.log(state);
+  const submitSymptoms = () => {
+    const uid = localStorage.getItem('Uid');
+
+    Dispatch(AddInDb(uid, state, '/Sintomas'))
+      .then(() => {
+        history.push('/resultado');
+      })
+      .catch(() => {
+        submitSymptoms();
+      });
   };
 
   const {
@@ -37,10 +52,17 @@ export default function Symptoms({ submitSymptons }) {
     tosse,
     dorgarganta,
     febre,
-    malestargeral,
+    doresmusculares,
     dificuldaderespirar,
     diarreia,
   } = state;
+
+  useEffect(() => {
+    const uid = localStorage.getItem('Uid');
+    if (uid) {
+      Dispatch(verifySteps(uid, history));
+    }
+  }, []);
 
   return (
     <>
@@ -54,7 +76,7 @@ export default function Symptoms({ submitSymptons }) {
             <FormControlLabel
               control={
                 <CheckBox
-                  checked={coriza}
+                  checked={coriza === 1}
                   onChange={handleChange}
                   name="coriza"
                 />
@@ -64,7 +86,7 @@ export default function Symptoms({ submitSymptons }) {
             <FormControlLabel
               control={
                 <CheckBox
-                  checked={dorcabeca}
+                  checked={dorcabeca === 1}
                   onChange={handleChange}
                   name="dorcabeca"
                 />
@@ -74,7 +96,7 @@ export default function Symptoms({ submitSymptons }) {
             <FormControlLabel
               control={
                 <CheckBox
-                  checked={tosse}
+                  checked={tosse === 1}
                   onChange={handleChange}
                   name="tosse"
                 />
@@ -84,7 +106,7 @@ export default function Symptoms({ submitSymptons }) {
             <FormControlLabel
               control={
                 <CheckBox
-                  checked={dorgarganta}
+                  checked={dorgarganta === 1}
                   onChange={handleChange}
                   name="dorgarganta"
                 />
@@ -94,7 +116,7 @@ export default function Symptoms({ submitSymptons }) {
             <FormControlLabel
               control={
                 <CheckBox
-                  checked={febre}
+                  checked={febre === 1}
                   onChange={handleChange}
                   name="febre"
                 />
@@ -104,17 +126,17 @@ export default function Symptoms({ submitSymptons }) {
             <FormControlLabel
               control={
                 <CheckBox
-                  checked={malestargeral}
+                  checked={doresmusculares === 1}
                   onChange={handleChange}
-                  name="malestargeral"
+                  name="doresmusculares"
                 />
               }
-              label="Mal Estar Geral"
+              label="Dores Musculares"
             />
             <FormControlLabel
               control={
                 <CheckBox
-                  checked={dificuldaderespirar}
+                  checked={dificuldaderespirar === 1}
                   onChange={handleChange}
                   name="dificuldaderespirar"
                 />
@@ -124,7 +146,7 @@ export default function Symptoms({ submitSymptons }) {
             <FormControlLabel
               control={
                 <CheckBox
-                  checked={diarreia}
+                  checked={diarreia === 1}
                   onChange={handleChange}
                   name="diarreia"
                 />
@@ -137,7 +159,7 @@ export default function Symptoms({ submitSymptons }) {
           className={classes.symptomsBtn}
           variant="contained"
           theme="primary"
-          onClick={() => submitSymptoms(state)}
+          onClick={() => submitSymptoms()}
         >
           Continuar
         </Button>
@@ -147,7 +169,3 @@ export default function Symptoms({ submitSymptons }) {
 }
 
 Symptoms.displayName = 'Symptoms';
-
-Symptoms.propTypes = {
-  submitSymptons: PropTypes.func.isRequired,
-};

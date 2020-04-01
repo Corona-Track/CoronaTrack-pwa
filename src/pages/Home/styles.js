@@ -9,6 +9,8 @@ export const Container = styled.div`
   justify-content: center;
 `;
 
-export const Image = styled.img``;
-
-export const P = styled.p``;
+export const ShareContainer = styled.div`
+  width: 100%;
+  background: #fff;
+  padding: 20px 32px 4px 32px;
+`;

@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
 import { Typography } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
 import FormControl from '@material-ui/core/FormControl';
@@ -11,7 +10,7 @@ import { useDispatch } from 'react-redux';
 import { useStyles } from './styles';
 
 // Actions
-import { AddInDb } from '../../actions/DegreeRiskActions';
+import { AddInDb, verifySteps } from '../../actions/DegreeRiskActions';
 
 // Components
 import Button from '../../components/Button';
@@ -51,8 +50,9 @@ export default function ChronicDiseases() {
     const uid = localStorage.getItem('Uid');
 
     if (uid) {
-      Dispatch(AddInDb(uid, newState)).then(() => {
-        history.push('/');
+      Dispatch(AddInDb(uid, newState, '/Cronicas')).then(() => {
+        localStorage.setItem('fullStep', true);
+        history.push('/sintomas');
       });
     }
   };
@@ -68,6 +68,13 @@ export default function ChronicDiseases() {
     transplanted,
     immunosuppressantUser,
   } = state;
+
+  useEffect(() => {
+    const uid = localStorage.getItem('Uid');
+    if (uid) {
+      Dispatch(verifySteps(uid, history));
+    }
+  }, []);
 
   return (
     <Container className={classes.chronicDiseases}>
@@ -184,7 +191,3 @@ export default function ChronicDiseases() {
 }
 
 ChronicDiseases.displayName = 'ChronicDiseases';
-
-ChronicDiseases.propTypes = {
-  submitChronicDiseases: PropTypes.func.isRequired,
-};
