@@ -134,15 +134,11 @@ export const symptEval = uid => {
         .database()
         .ref(`healthScreening/${uid}/Sintomas`) // muda depois para percorrer todos
         .once('value', snapshot => {
-          // const amountPeople = snapshot.numChildren();
-
-          // const sintomas = amountSymptms(snapshot.val(), snapshot.val()[uid]);
-          // febre, dor de cabeça, tosse, dor de garganta, coriza, dores musculares, dificuldade de respirar, diarreia
           const sintomas = snapshot.val();
 
           delete sintomas.contactWithConfirmed;
           delete sintomas.contactWithSuspect;
-          console.log(sintomas);
+
           const {
             febre,
             dorDeCabeca,
@@ -187,28 +183,7 @@ export const symptEval = uid => {
             .catch(() => {
               reject(new Error('Erro Ao Gravar os dados'));
             });
-
-          // console.log(testeFinal);
-
-          // snapshot.forEach(item => {
-          //   const newSympt = item.val();
-
-          //   delete newSympt.contactWithConfirmed;
-          //   delete newSympt.contactWithSuspect;
-
-          //   console.log(newSympt);
-          // });
         });
     });
   };
 };
-
-// const newSympt = snapshot.val();
-
-// delete newSympt.contactWithConfirmed;
-// delete newSympt.contactWithSuspect;
-
-// const posSympt = [115, 11, 113, 7, 6, 15, 41, 1];
-
-// console.log(posSympt);
-// console.log(newSympt);
