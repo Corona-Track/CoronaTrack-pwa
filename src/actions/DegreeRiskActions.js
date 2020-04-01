@@ -6,33 +6,32 @@ export const verifySteps = (uid, history, path = '') => {
       .database()
       .ref(`healthScreening/${uid}${path}`)
       .once('value', snapshot => {
-        if (snapshot.val()) {
-          const {
-            contactWithSuspect,
-            contactWithConfirmed,
-            Sintomas,
-            Cronicas,
-          } = snapshot.val();
-
-          if (contactWithSuspect && !contactWithSuspect) {
-            history.push('/diagnostico/confirmados');
-            return;
-          }
-          if (
-            (!contactWithSuspect && contactWithConfirmed) ||
-            (!contactWithSuspect && !contactWithConfirmed)
-          ) {
-            history.push('/diagnostico/suspeitos');
-            return;
-          }
-          if (Sintomas && !Cronicas) {
-            history.push('/doencas/cronicas');
-            return;
-          }
-          if ((!Sintomas && Cronicas) || (!Sintomas && !Cronicas)) {
-            history.push(' /sintomas');
-          }
-        }
+        //   if (snapshot.val()) {
+        //     const {
+        //       contactWithSuspect,
+        //       contactWithConfirmed,
+        //       Sintomas,
+        //       Cronicas,
+        //     } = snapshot.val();
+        //     if (contactWithSuspect && !contactWithSuspect) {
+        //       history.push('/diagnostico/confirmados');
+        //       return;
+        //     }
+        //     if (
+        //       (!contactWithSuspect && contactWithConfirmed) ||
+        //       (!contactWithSuspect && !contactWithConfirmed)
+        //     ) {
+        //       history.push('/diagnostico/suspeitos');
+        //       return;
+        //     }
+        //     if (Sintomas && !Cronicas) {
+        //       history.push('/doencas/cronicas');
+        //       return;
+        //     }
+        //     if ((!Sintomas && Cronicas) || (!Sintomas && !Cronicas)) {
+        //       history.push(' /sintomas');
+        //     }
+        //   }
       });
   };
 };
