@@ -224,7 +224,7 @@ export default function Home() {
           value={formState.city}
           error={error.city}
           variant="outlined"
-          onChange={event => setState(event, 'email')}
+          onChange={event => setState(event, 'city')}
         />
 
         <Input
