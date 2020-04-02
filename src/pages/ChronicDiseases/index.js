@@ -128,7 +128,7 @@ export default function ChronicDiseases() {
             control={
               <CheckBox checked={copd} onChange={handleChange} name="copd" />
             }
-            label="DPOC"
+            label="Doença Pulmonar Obstrutiva Crônica (DPOC)"
           />
           <FormControlLabel
             control={
