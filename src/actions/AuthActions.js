@@ -48,6 +48,23 @@ export const setUID = uid => {
   };
 };
 
+export const setPosition = (uid, coords) => {
+  return dispatch => {
+    return new Promise((resolve, reject) => {
+      firebase
+        .database()
+        .ref(`tracking/${uid}`)
+        .set({ ...coords })
+        .then(() => {
+          resolve();
+        })
+        .catch(() => {
+          reject();
+        });
+    });
+  };
+};
+
 export const createNewUser = (email, password, newUserInfos) => {
   return dispatch => {
     return new Promise((resolve, reject) => {
@@ -86,7 +103,7 @@ export const createNewUser = (email, password, newUserInfos) => {
                 .set({ ...newUser });
 
               localStorage.setItem('Signed', true);
-              resolve();
+              resolve({ uid: user.uid });
             })
             .catch(error => {
               let errorMessage = '';
@@ -125,6 +142,8 @@ export const SignInAction = (email, password) => {
           const { uid } = firebase.auth().currentUser;
           setUID(uid);
           localStorage.setItem('Signed', true);
+
+          localStorage.setItem('Uid', uid);
           resolve();
         })
         .catch(error => {
@@ -160,18 +179,17 @@ export const loginWithFacebook = () => {
         .then(() => {
           const { uid } = firebase.auth().currentUser;
           setUID(uid);
+          localStorage.setItem('Uid', uid);
           firebase
             .database()
             .ref(`Users/${uid}`)
             .once('value')
             .then(snapshot => {
-              snapshot.forEach(childItem => {
-                if (!childItem) {
-                  return localStorage.setItem('loginType', 'facebook');
-                }
-                localStorage.setItem('Signed', true);
+              if (!snapshot.val()) {
                 resolve();
-              });
+                localStorage.setItem('loginType', 'facebook');
+                resolve();
+              }
             });
         })
         .catch(() => {

@@ -1,17 +1,25 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
 import { Typography } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { useStyles } from './styles';
+
+// Actions
+import { AddInDb, verifySteps } from '../../actions/DegreeRiskActions';
 
 // Components
 import Button from '../../components/Button';
 import CheckBox from '../../components/CheckBox';
 
 export default function ChronicDiseases() {
+  const history = useHistory();
+  const Dispatch = useDispatch();
+
   const classes = useStyles();
   const [state, setState] = React.useState({
     diabetes: false,
@@ -31,7 +39,22 @@ export default function ChronicDiseases() {
 
   const submitChronicDiseases = state => {
     // submitChronicDiseases(state);
-    alert(...state);
+    let newState = {};
+    Object.entries(state).forEach(item => {
+      newState = {
+        ...newState,
+        [item[0]]: item[1] ? 1 : 0,
+      };
+    });
+
+    const uid = localStorage.getItem('Uid');
+
+    if (uid) {
+      Dispatch(AddInDb(uid, newState, '/Cronicas')).then(() => {
+        localStorage.setItem('fullStep', true);
+        history.push('/sintomas');
+      });
+    }
   };
 
   const {
@@ -45,6 +68,13 @@ export default function ChronicDiseases() {
     transplanted,
     immunosuppressantUser,
   } = state;
+
+  useEffect(() => {
+    const uid = localStorage.getItem('Uid');
+    if (uid) {
+      Dispatch(verifySteps(uid, history));
+    }
+  }, []);
 
   return (
     <Container className={classes.chronicDiseases}>
@@ -98,7 +128,7 @@ export default function ChronicDiseases() {
             control={
               <CheckBox checked={copd} onChange={handleChange} name="copd" />
             }
-            label="DPOC"
+            label="Doença Pulmonar Obstrutiva Crônica (DPOC)"
           />
           <FormControlLabel
             control={
@@ -161,7 +191,3 @@ export default function ChronicDiseases() {
 }
 
 ChronicDiseases.displayName = 'ChronicDiseases';
-
-ChronicDiseases.propTypes = {
-  submitChronicDiseases: PropTypes.func.isRequired,
-};

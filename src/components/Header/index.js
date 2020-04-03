@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useHistory, Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import {
-  FiCopy,
   FiX,
   FiUser,
   FiShare2,
@@ -10,9 +11,9 @@ import {
   FiArrowDownRight,
   FiMenu,
 } from 'react-icons/fi';
+
 import {
   Container,
-  H1,
   MenuContainer,
   MenuLeft,
   Items,
@@ -21,12 +22,17 @@ import {
   HeadMenu,
   Description,
   Version,
+  Image,
 } from './styles';
+
 import Share from '../Share';
+
 import { signOut } from '../../actions/AuthActions';
-import { Link } from 'react-router-dom';
+import { getInfos } from '../../actions/DegreeRiskActions';
+
 // Assets
 import logo from '../../assets/images/logo2.png';
+
 const greenColor = '#03A39B';
 
 const IconMenu = ({ Component }) => (
@@ -34,13 +40,33 @@ const IconMenu = ({ Component }) => (
 );
 
 export default function Header({ title, onClick }) {
-  let [openMenu, setMenu] = useState(false);
-  let [openShare, setShare] = useState(false);
+  const history = useHistory();
+  const Dispatch = useDispatch();
+
+  const [openMenu, setMenu] = useState(false);
+  const [openShare, setShare] = useState(false);
+  const [infos, setInfos] = useState({ name: '', grauDeRisco: '' });
+
+  function setSignOute() {
+    signOut();
+    history.push('/login');
+  }
 
   function handleShare() {
     setMenu(false);
     setShare(!openShare);
   }
+
+  useEffect(() => {
+    const uid = localStorage.getItem('Uid');
+    const Signed = localStorage.getItem('Signed') || null;
+    if (Signed) {
+      Dispatch(getInfos(uid)).then(res => {
+        setInfos(res);
+      });
+    }
+  }, []);
+
   return (
     <>
       <Container onClick={onClick}>
@@ -48,7 +74,7 @@ export default function Header({ title, onClick }) {
           onClick={() => setMenu(!openMenu)}
           style={{ fontSize: 32, color: greenColor, cursor: 'pointer' }}
         />
-        <img src={logo} />
+        <Image src={logo} alt="logo" />
         <div />
       </Container>
       <MenuContainer active={openMenu}>
@@ -60,9 +86,9 @@ export default function Header({ title, onClick }) {
             />
           </HeadMenu>
           <Description>Olá</Description>
-          <Name>Bruno Silva</Name>
+          <Name>{infos.name}</Name>
           <Description>
-            Baixo Risco
+            {infos.grauDeRisco} Risco
             <FiArrowDownRight
               style={{ fontSize: 14, color: greenColor, marginBottom: -3 }}
             />
@@ -81,7 +107,7 @@ export default function Header({ title, onClick }) {
               <IconMenu Component={FiShare2} /> COMPARTILHE
             </ItemMenu>
           </Items>
-          <ItemMenu onClick={() => signOut()}>
+          <ItemMenu onClick={() => setSignOute()}>
             <IconMenu Component={FiLogOut} /> SAIR
           </ItemMenu>
           <Version>Versão 1.0.1</Version>

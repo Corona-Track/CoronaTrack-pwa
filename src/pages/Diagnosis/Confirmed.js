@@ -26,7 +26,7 @@ export default function Suspects() {
     if (uid) {
       Dispatch(AddInDb(uid, { contactWithConfirmed: value })).then(() => {
         setLoading(false);
-        history.push('/');
+        history.push('/doencas/cronicas');
       });
     }
   }
@@ -35,7 +35,7 @@ export default function Suspects() {
     if (uid) {
       Dispatch(verifySteps(uid, history));
     }
-  }, []);
+  });
 
   return (
     <Container>

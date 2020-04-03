@@ -4,7 +4,7 @@ import { MdArrowForward } from 'react-icons/md';
 import MenuItem from '@material-ui/core/MenuItem';
 
 // Components
-import Header from '../../components/Header';
+import HeaderRouter from '../../components/HeaderRouter';
 import Input from '../../components/Input';
 import Select from '../../components/Select';
 import Button from '../../components/Button';
@@ -165,7 +165,7 @@ export default function Home() {
     <Container>
       <Loading open={loading} />
       <Content>
-        <Header title="Criar Conta" onClick={() => history.goBack()} />
+        <HeaderRouter title="Criar Conta" onClick={() => history.goBack()} />
         <p className="description">Dados Pessoais</p>
         <Input
           required

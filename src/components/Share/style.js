@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  display: ${props =>
-    props.active ? 'block' : 'none'}; /* Hidden by default */
+  display: ${props => (props.active ? 'flex' : 'none')}; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
   left: 0;
@@ -12,6 +11,7 @@ export const Wrapper = styled.div`
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0, 0, 0); /* Fallback color */
   background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  align-items: center;
 `;
 export const Modal = styled.div`
   background-color: #fefefe;
