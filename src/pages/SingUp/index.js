@@ -86,10 +86,10 @@ export default function Home() {
       const { cpf } = formState;
       setFormState({
         ...formState,
-        cpf: cpf.replace(/(\d{3})?(\d{3})?(\d{3})?(\d{2})/, '$1.$2.$3-$4'),
+        cpf: cpf ? cpf.replace(/(\d{3})?(\d{3})?(\d{3})?(\d{2})/, '$1.$2.$3-$4') : cpf,
       });
 
-      if (cpf.length > 11 || cpf.length < 11) {
+      if (!cpf || cpf.length > 11 || cpf.length < 11) {
         setError({
           ...error,
           cpf: true,
@@ -103,7 +103,7 @@ export default function Home() {
     } else {
       setFormState({
         ...formState,
-        cpf: formState.cpf.replace(/[.-]/g, ''),
+        cpf: formState.cpf ? formState.cpf.replace(/[.-]/g, '') : formState.cpf,
       });
     }
   }
@@ -112,10 +112,10 @@ export default function Home() {
     if (type === 'blur') {
       setFormState({
         ...formState,
-        dateBirth: dateBirth.replace(/(\d{2})?(\d{2})?(\d{4})/, '$1/$2/$3'),
+        dateBirth: dateBirth ? dateBirth.replace(/(\d{2})?(\d{2})?(\d{4})/, '$1/$2/$3') : dateBirth,
       });
 
-      if (dateBirth.length > 8 || dateBirth.length < 8) {
+      if (!dateBirth || dateBirth.length > 8 || dateBirth.length < 8) {
         setError({
           ...error,
           dateBirth: true,
@@ -129,7 +129,7 @@ export default function Home() {
     } else {
       setFormState({
         ...formState,
-        dateBirth: dateBirth.replace(/[/]/g, ''),
+        dateBirth: dateBirth ? dateBirth.replace(/[/]/g, '') : dateBirth,
       });
     }
   }
@@ -139,10 +139,10 @@ export default function Home() {
     if (type === 'blur') {
       setFormState({
         ...formState,
-        phone: phone.replace(/(\d{2})?(\d{4})?(\d{5})/, '($1) $2-$3'),
+        phone: phone ? phone.replace(/(\d{2})?(\d{4})?(\d{5})/, '($1) $2-$3') : phone,
       });
 
-      if (phone.length < 10) {
+      if (!phone || phone.length < 10) {
         setError({
           ...error,
           phone: true,
@@ -156,7 +156,7 @@ export default function Home() {
     } else {
       setFormState({
         ...formState,
-        phone: phone.replace(/[()-\s/]/g, ''),
+        phone: phone ? phone.replace(/[()-\s/]/g, '') : phone,
       });
     }
   }
@@ -201,22 +201,25 @@ export default function Home() {
           error={error.sexo}
           label="Sexo"
           value={formState.sexo}
-          onChange={event => setState(event, 'sexo')}
-        >
+          onChange={event => {
+            setFormState({
+              sexo: event && event.target && event.target.value ? event.target.value : null,
+              riskGroup: null
+            });
+          }}>
           <MenuItem value="Masculino">Masculino</MenuItem>
-          <MenuItem value="Masculino">Feminino</MenuItem>
+          <MenuItem value="Feminino">Feminino</MenuItem>
         </Select>
-
-        <Select
-          label="Grupo de Risco"
-          error={error.riskGroup}
-          value={formState.riskGroup}
-          onChange={event => setState(event, 'riskGroup')}
-        >
-          <MenuItem value="Não">Não</MenuItem>
-          <MenuItem value="gravida">Gravida</MenuItem>
-        </Select>
-
+        {formState.sexo && formState.sexo === "Feminino" && (
+          <Select
+            label="Grupo de Risco"
+            error={error.riskGroup}
+            value={formState.riskGroup}
+            onChange={event => setState(event, 'riskGroup')}>
+            <MenuItem value="Não">Não</MenuItem>
+            <MenuItem value="gravida">Gravida</MenuItem>
+          </Select>
+        )}
         <Input
           required
           label="Celular"
