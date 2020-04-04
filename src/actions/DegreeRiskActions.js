@@ -1,5 +1,17 @@
 import firebase from '../FirebaseConnection';
 
+export const getPosition = uid => {
+  return dispatch => {
+    return new Promise(resolve => {
+      firebase
+        .database()
+        .ref(`tracking/${uid}`)
+        .once('value', snapshot => {
+          resolve(snapshot.val());
+        });
+    });
+  };
+};
 export const verifySteps = (uid, history, path = '') => {
   return dispatch => {
     // firebase

@@ -11,7 +11,7 @@ import Button from '../../components/Button';
 import Header from '../../components/Header';
 
 // Actions
-import { verifySteps } from '../../actions/DegreeRiskActions';
+import { getPosition } from '../../actions/DegreeRiskActions';
 
 // Styles
 import { Container, ShareContainer } from './styles';
@@ -21,6 +21,7 @@ export default function Home() {
   const Dispatch = useDispatch();
 
   const [shareActive, setShareActive] = useState(false);
+  const [coord, setCoord] = useState({});
 
   const uid = localStorage.getItem('Uid');
 
@@ -34,7 +35,9 @@ export default function Home() {
 
   useEffect(() => {
     if (uid) {
-      Dispatch(verifySteps(uid, history));
+      Dispatch(getPosition(uid)).then(res => {
+        setCoord(res);
+      });
     }
   }, []);
 
@@ -44,7 +47,7 @@ export default function Home() {
         <Header />
         <Share active={shareActive} onClose={handleShare} />
         <Iframe
-          url="http://site58987541.westus2.cloudapp.azure.com:81/epidemia/Grafico/Map?modulo=Geociencia&acesso_publico=S&acesso_mobile=S"
+          url={`http://site58987541.westus2.cloudapp.azure.com:81/epidemia/Grafico/Map?modulo=Geociencia&acesso_publico=S&acesso_mobile=S&integracao=S&latitude=${coord.latitude}&longitude=${coord.longitude}&zoom=10&uid=${uid}`}
           width="100%"
           height="100%"
         />
