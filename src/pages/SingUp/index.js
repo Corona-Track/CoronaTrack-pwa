@@ -220,17 +220,19 @@ export default function Home() {
           <MenuItem value="Masculino">Masculino</MenuItem>
           <MenuItem value="Feminino">Feminino</MenuItem>
         </Select>
-        {formState.sexo && formState.sexo === 'Feminino' && (
-          <Select
-            label="Gestante"
-            error={error.pregnant}
-            value={formState.pregnant}
-            onChange={event => setState(event, 'pregnant')}
-          >
-            <MenuItem value="Não">Não</MenuItem>
-            <MenuItem value="Sim">Sim</MenuItem>
-          </Select>
-        )}
+
+        <Select
+          label="Gestante"
+          disabled={formState.sexo !== 'Feminino'}
+          style={{ background: formState.sexo !== 'Feminino' ? '#e0e0e0' : '' }}
+          error={error.pregnant}
+          value={formState.pregnant}
+          onChange={event => setState(event, 'pregnant')}
+        >
+          <MenuItem value="Não">Não</MenuItem>
+          <MenuItem value="Sim">Sim</MenuItem>
+        </Select>
+
         <Input
           required
           label="Celular"
