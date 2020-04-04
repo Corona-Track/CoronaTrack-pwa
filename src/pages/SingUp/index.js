@@ -21,7 +21,7 @@ export default function Home() {
     cpf: '',
     dateBirth: '',
     sexo: '',
-    pregnant: '',
+    pregnant: ' ',
     phone: '',
   });
 
@@ -33,7 +33,7 @@ export default function Home() {
     phone: false,
     name: false,
     sexo: false,
-    pregnant: false,
+    pregnant: true,
   });
 
   function setState(event, state) {

@@ -158,7 +158,6 @@ export default function Home() {
         ...JSON.parse(infosTemp),
         ...formState,
       };
-      console.log(newForm);
       Dispatch(createNewUser(formState.email, formState.password, newForm))
         .then(({ uid }) => {
           Dispatch(setPosition(uid, location))
@@ -167,7 +166,6 @@ export default function Home() {
               history.push('/diagnostico/suspeitos');
             })
             .catch(() => {
-              console.log('jonas');
               setLoading(false);
             });
         })
@@ -204,7 +202,7 @@ export default function Home() {
         <Input
           required
           label="CEP"
-          value={formState.zipCode || ' '}
+          value={formState.zipCode || ''}
           error={error.zipCode}
           variant="outlined"
           onChange={event => setState(event, 'zipCode')}
