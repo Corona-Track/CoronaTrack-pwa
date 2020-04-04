@@ -48,14 +48,39 @@ export default function Header({ title, onClick }) {
   const [infos, setInfos] = useState({ name: '', grauDeRisco: '' });
 
   function setSignOute() {
-    signOut();
-    history.push('/login');
+    Dispatch(signOut()).then(() => {
+      history.push('/login');
+    });
   }
 
   function handleShare() {
     setMenu(false);
     setShare(!openShare);
   }
+
+  const colorRisk = () => {
+    if (infos.grauDeRisco === 'Alto') {
+      return '#EB5757';
+    }
+    if (infos.grauDeRisco === 'Médio') {
+      return '#F2C94C';
+    }
+    if (infos.grauDeRisco === 'Baixo') {
+      return '#27AE60';
+    }
+  };
+
+  const tranformRisk = () => {
+    if (infos.grauDeRisco === 'Alto') {
+      return `rotate(-90deg)`;
+    }
+    if (infos.grauDeRisco === 'Médio') {
+      return `rotate(-45deg)`;
+    }
+    if (infos.grauDeRisco === 'Baixo') {
+      return `rotate(0)`;
+    }
+  };
 
   useEffect(() => {
     const uid = localStorage.getItem('Uid');
@@ -90,17 +115,22 @@ export default function Header({ title, onClick }) {
           <Description>
             {infos.grauDeRisco} Risco
             <FiArrowDownRight
-              style={{ fontSize: 14, color: greenColor, marginBottom: -3 }}
+              style={{
+                fontSize: 14,
+                color: colorRisk(),
+                transform: tranformRisk(),
+                marginBottom: -3,
+              }}
             />
           </Description>
           <Items>
             <ItemMenu as={Link} to="#">
-              <IconMenu Component={FiUser} /> MEUS DADOS
+              {/* <IconMenu Component={FiUser} /> MEUS DADOS */}
             </ItemMenu>
             <ItemMenu as={Link} to="#">
-              <IconMenu Component={FiClipboard} /> MEUS SISTEMAS
+              {/* <IconMenu Component={FiClipboard} /> MEUS SISTEMAS */}
             </ItemMenu>
-            <ItemMenu as={Link} to="#">
+            <ItemMenu as={Link} to="/" onClick={() => setMenu(false)}>
               <IconMenu Component={FiMapPin} /> MAPA DE RISCO
             </ItemMenu>
             <ItemMenu onClick={handleShare}>

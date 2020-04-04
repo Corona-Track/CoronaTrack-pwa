@@ -21,7 +21,7 @@ export default function Home() {
     cpf: '',
     dateBirth: '',
     sexo: '',
-    riskGroup: '',
+    pregnant: '',
     phone: '',
   });
 
@@ -33,7 +33,7 @@ export default function Home() {
     phone: false,
     name: false,
     sexo: false,
-    riskGroup: false,
+    pregnant: false,
   });
 
   function setState(event, state) {
@@ -86,7 +86,9 @@ export default function Home() {
       const { cpf } = formState;
       setFormState({
         ...formState,
-        cpf: cpf ? cpf.replace(/(\d{3})?(\d{3})?(\d{3})?(\d{2})/, '$1.$2.$3-$4') : cpf,
+        cpf: cpf
+          ? cpf.replace(/(\d{3})?(\d{3})?(\d{3})?(\d{2})/, '$1.$2.$3-$4')
+          : cpf,
       });
 
       if (!cpf || cpf.length > 11 || cpf.length < 11) {
@@ -112,7 +114,9 @@ export default function Home() {
     if (type === 'blur') {
       setFormState({
         ...formState,
-        dateBirth: dateBirth ? dateBirth.replace(/(\d{2})?(\d{2})?(\d{4})/, '$1/$2/$3') : dateBirth,
+        dateBirth: dateBirth
+          ? dateBirth.replace(/(\d{2})?(\d{2})?(\d{4})/, '$1/$2/$3')
+          : dateBirth,
       });
 
       if (!dateBirth || dateBirth.length > 8 || dateBirth.length < 8) {
@@ -139,7 +143,9 @@ export default function Home() {
     if (type === 'blur') {
       setFormState({
         ...formState,
-        phone: phone ? phone.replace(/(\d{2})?(\d{4})?(\d{5})/, '($1) $2-$3') : phone,
+        phone: phone
+          ? phone.replace(/(\d{2})?(\d{4})?(\d{5})/, '($1) $2-$3')
+          : phone,
       });
 
       if (!phone || phone.length < 10) {
@@ -203,21 +209,26 @@ export default function Home() {
           value={formState.sexo}
           onChange={event => {
             setFormState({
-              sexo: event && event.target && event.target.value ? event.target.value : null,
-              riskGroup: null
+              sexo:
+                event && event.target && event.target.value
+                  ? event.target.value
+                  : null,
+              pregnant: null,
             });
-          }}>
+          }}
+        >
           <MenuItem value="Masculino">Masculino</MenuItem>
           <MenuItem value="Feminino">Feminino</MenuItem>
         </Select>
-        {formState.sexo && formState.sexo === "Feminino" && (
+        {formState.sexo && formState.sexo === 'Feminino' && (
           <Select
-            label="Grupo de Risco"
-            error={error.riskGroup}
-            value={formState.riskGroup}
-            onChange={event => setState(event, 'riskGroup')}>
+            label="Gestante"
+            error={error.pregnant}
+            value={formState.pregnant}
+            onChange={event => setState(event, 'pregnant')}
+          >
             <MenuItem value="Não">Não</MenuItem>
-            <MenuItem value="gravida">Gravida</MenuItem>
+            <MenuItem value="Sim">Sim</MenuItem>
           </Select>
         )}
         <Input
