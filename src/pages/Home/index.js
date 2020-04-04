@@ -46,11 +46,13 @@ export default function Home() {
       <Container>
         <Header />
         <Share active={shareActive} onClose={handleShare} />
-        <Iframe
-          url={`https://site58987541.westus2.cloudapp.azure.com:81/epidemia/Grafico/Map?modulo=Geociencia&acesso_publico=S&acesso_mobile=S&integracao=S&latitude=${coord.latitude}&longitude=${coord.longitude}&zoom=10&uid=${uid}`}
-          width="100%"
-          height="100%"
-        />
+        {coord.latitude && (
+          <Iframe
+            url={`https://site58987541.westus2.cloudapp.azure.com:81/epidemia/Grafico/Map?modulo=Geociencia&acesso_publico=S&acesso_mobile=S&integracao=S&latitude=${coord.latitude}&longitude=${coord.longitude}&zoom=10&uid=${uid}`}
+            width="100%"
+            height="100%"
+          />
+        )}
         <ShareContainer>
           <Button
             variant="contained"
