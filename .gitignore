@@ -9,7 +9,7 @@
 #/src/FirebaseConnection.js
 
 # Testando
-./package-lock.json
+package-lock.json
 
 # testing
 /coverage
