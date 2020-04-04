@@ -2,25 +2,25 @@ import firebase from '../FirebaseConnection';
 
 export const verifySteps = (uid, history, path = '') => {
   return dispatch => {
-    firebase
-      .database()
-      .ref(`healthScreening/${uid}${path}`)
-      .once('value', snapshot => {
-        if (snapshot.val()) {
-          const { contactWithSuspect, contactWithConfirmed } = snapshot.val();
-          if (contactWithSuspect && !contactWithSuspect) {
-            history.push('/diagnostico/confirmados');
-            return;
-          }
-          if (
-            (!contactWithSuspect && contactWithConfirmed) ||
-            (!contactWithSuspect && !contactWithConfirmed)
-          ) {
-            history.push('/diagnostico/suspeitos');
-          }
-          history.push('/');
-        }
-      });
+    // firebase
+    //   .database()
+    //   .ref(`healthScreening/${uid}${path}`)
+    //   .once('value', snapshot => {
+    //     if (snapshot.val()) {
+    //       const { contactWithSuspect, contactWithConfirmed } = snapshot.val();
+    //       if (contactWithSuspect && !contactWithSuspect) {
+    //         history.push('/diagnostico/confirmados');
+    //         return;
+    //       }
+    //       if (
+    //         (!contactWithSuspect && contactWithConfirmed) ||
+    //         (!contactWithSuspect && !contactWithConfirmed)
+    //       ) {
+    //         history.push('/diagnostico/suspeitos');
+    //       }
+    //       history.push('/');
+    //     }
+    //   });
   };
 };
 
@@ -32,6 +32,7 @@ export const AddInDb = (uid, data, path = '') => {
         .ref(`healthScreening/${uid}${path}`)
         .update({ ...data })
         .then(() => {
+          console.log('jonassss');
           resolve();
         })
         .catch(e => {

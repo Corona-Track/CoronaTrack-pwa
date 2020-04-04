@@ -26,7 +26,8 @@ export default function Suspects() {
     setLoading(true);
     if (uid) {
       Dispatch(AddInDb(uid, { contactWithSuspect: value })).then(() => {
-        history.push('/diagnostico/suspeitos');
+        setLoading(false);
+        history.push('/diagnostico/confirmados');
       });
     }
   }

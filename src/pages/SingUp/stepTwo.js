@@ -158,7 +158,7 @@ export default function Home() {
         ...JSON.parse(infosTemp),
         ...formState,
       };
-
+      console.log(newForm);
       Dispatch(createNewUser(formState.email, formState.password, newForm))
         .then(({ uid }) => {
           Dispatch(setPosition(uid, location))
@@ -204,7 +204,7 @@ export default function Home() {
         <Input
           required
           label="CEP"
-          value={formState.zipCode}
+          value={formState.zipCode || ' '}
           error={error.zipCode}
           variant="outlined"
           onChange={event => setState(event, 'zipCode')}
@@ -213,7 +213,7 @@ export default function Home() {
         <Input
           required
           label="Rua"
-          value={formState.street}
+          value={formState.street || ''}
           error={error.street}
           variant="outlined"
           onChange={event => setState(event, 'dateBirth')}

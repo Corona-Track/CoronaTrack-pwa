@@ -48,9 +48,9 @@ export default function Result() {
             <Box textAlign="center">RESULTADO</Box>
           </Typography>
           <ResultStatus result={result} />
-          <video width="320" height="240" autoPlay="autoplay">
+          {/* <video width="320" height="240" autoPlay="autoplay">
             <source src="video/QDEOL.mp4" type="video/mp4" />
-          </video>
+          </video> */}
           <Button
             variant="contained"
             theme="primary"
