@@ -163,7 +163,7 @@ export default function Symptoms() {
           Continuar
         </Button>
         <ButtonOption type="button" onClick={() => submitSymptoms()}>
-          Não tenho certeza.
+          Não tenho nenhuma
         </ButtonOption>
       </Container>
     </>

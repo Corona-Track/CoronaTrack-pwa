@@ -187,7 +187,7 @@ export default function ChronicDiseases() {
         Continuar
       </Button>
       <ButtonOption type="button" onClick={() => submitChronicDiseases()}>
-        Não tenho certeza.
+        Não tenho nenhuma
       </ButtonOption>
     </Container>
   );
