@@ -12,6 +12,12 @@ export default createGlobalStyle`
       height: 100%;
     }
 
+  #root {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+
+  }
     body {
       -webkit-font-smoothing: antialiased;
     }

@@ -4,15 +4,13 @@ import { $colorDanger } from '../../styles/variables';
 export const Container = styled.div`
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 30px;
+  margin-top: 88px;
 `;
 
 export const Content = styled.div`
   padding: 0 25px;
+  text-align: left;
+
   p.description {
     font-weight: 500;
     font-size: 16px;

@@ -69,9 +69,11 @@ export default function Home() {
             longitude,
           };
           setLocation(coords);
+          alert('Dados gravados com sucesso!');
         }
       );
     } else {
+      alert('Precisamos da sua localização para melhor funcionamento do app');
       setLocation('');
     }
   }

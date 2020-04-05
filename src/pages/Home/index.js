@@ -36,7 +36,6 @@ export default function Home() {
   useEffect(() => {
     if (uid) {
       Dispatch(getPosition(uid)).then(res => {
-        console.log(res);
         setCoord(res);
       });
     }
@@ -48,8 +47,7 @@ export default function Home() {
         <Header />
         <Share active={shareActive} onClose={handleShare} />
         <Iframe
-          url={`https://site58987541.westus2.cloudapp.azure.com/epidemia/Grafico/Map?modulo=Geociencia&acesso_publico=S&acesso_mobile=S&integracao=S&latitude=${coord.latitude ||
-            0}&longitude=${coord.longitude || 0}&zoom=10&uid=${uid}`}
+          url={` https://site58987541.westus2.cloudapp.azure.com/epidemia/Grafico/Map?modulo=Geociencia&acesso_publico=S&acesso_mobile=S&integracao=S&latitude=${coord.latitude}&longitude=${coord.longitude}&zoom=16&uid=${uid}`}
           width="100%"
           height="100%"
         />

@@ -208,6 +208,7 @@ export default function Home() {
           label="Sexo"
           value={formState.sexo}
           onChange={event => setState(event, 'sexo')}
+
         >
           <MenuItem value="Masculino">Masculino</MenuItem>
           <MenuItem value="Feminino">Feminino</MenuItem>
@@ -219,6 +220,7 @@ export default function Home() {
           style={{ background: formState.sexo !== 'Feminino' ? '#e0e0e0' : '' }}
           error={error.pregnant || false}
           value={formState.pregnant || ''}
+          defaultValue="Sim"
           onChange={event => setState(event, 'pregnant')}
         >
           <MenuItem value="Não">Não</MenuItem>

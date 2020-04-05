@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Typography } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
-import Container from '@material-ui/core/Container';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { useStyles } from './styles';
+import { useStyles, Container } from './styles';
 
 // Components
 import Button from '../../components/Button';
