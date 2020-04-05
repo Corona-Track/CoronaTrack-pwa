@@ -23,6 +23,7 @@ export const useStyles = makeStyles(() => ({
     '& label > span:nth-child(2)': {
       fontWeight: 500,
       fontFamily: "'Prompt', sans-serif",
+      textAlign: 'left',
     },
   },
   symptomsBtn: {
@@ -32,4 +33,5 @@ export const useStyles = makeStyles(() => ({
 
 export const Container = styled.div`
   margin-top: 88px;
+  text-align: left;
 `;

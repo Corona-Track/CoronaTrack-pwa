@@ -15,7 +15,6 @@ export default createGlobalStyle`
   #root {
     max-width: 600px;
     margin: 0 auto;
-    text-align: center;
 
   }
     body {
