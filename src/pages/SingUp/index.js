@@ -182,6 +182,11 @@ export default function Home() {
           onChange={event => setState(event, 'cpf')}
           onBlur={() => validateCpf('blur')}
           onFocus={() => validateCpf()}
+          onInput={e => {
+            e.target.value = Math.max(0, parseInt(e.target.value))
+              .toString()
+              .slice(0, 11);
+          }}
         />
         <Input
           required
@@ -201,6 +206,11 @@ export default function Home() {
           onChange={event => setState(event, 'dateBirth')}
           onBlur={() => validateDateBirth('blur')}
           onFocus={() => validateDateBirth()}
+          onInput={e => {
+            e.target.value = Math.max(0, parseInt(e.target.value))
+              .toString()
+              .slice(0, 8);
+          }}
         />
 
         <Select
@@ -208,10 +218,10 @@ export default function Home() {
           label="Sexo"
           value={formState.sexo}
           onChange={event => setState(event, 'sexo')}
-
         >
           <MenuItem value="Masculino">Masculino</MenuItem>
           <MenuItem value="Feminino">Feminino</MenuItem>
+          <MenuItem value="Não Identificar">Não Identificar</MenuItem>
         </Select>
 
         <Select
@@ -236,6 +246,11 @@ export default function Home() {
           onChange={event => setState(event, 'phone')}
           onBlur={() => validatePhone('blur')}
           onFocus={() => validatePhone()}
+          onInput={e => {
+            e.target.value = Math.max(0, parseInt(e.target.value))
+              .toString()
+              .slice(0, 11);
+          }}
         />
 
         <Button

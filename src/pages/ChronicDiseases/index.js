@@ -6,7 +6,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { useStyles, Container } from './styles';
+import { useStyles, Container, ButtonOption } from './styles';
 
 // Actions
 import { AddInDb, verifySteps } from '../../actions/DegreeRiskActions';
@@ -30,13 +30,14 @@ export default function ChronicDiseases() {
     cancer: false,
     transplanted: false,
     immunosuppressantUser: false,
+    DoencasCronicas: false,
   });
 
   const handleChange = event => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
 
-  const submitChronicDiseases = state => {
+  const submitChronicDiseases = () => {
     // submitChronicDiseases(state);
     let newState = {};
     Object.entries(state).forEach(item => {
@@ -185,6 +186,9 @@ export default function ChronicDiseases() {
       >
         Continuar
       </Button>
+      <ButtonOption type="button" onClick={() => submitChronicDiseases()}>
+        Não tenho certeza.
+      </ButtonOption>
     </Container>
   );
 }

@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
-  height: 100%;
   margin-top: 88px;
+  text-align: center;
 `;
 
 export const Content = styled.div`
@@ -38,4 +38,5 @@ export const ButtonOption = styled.button`
   text-align: center;
   color: #bdbdbd;
   margin: 32px 0;
+  text-align: center;
 `;

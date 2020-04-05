@@ -4,7 +4,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { useStyles, Container } from './styles';
+import { useStyles, Container, ButtonOption } from './styles';
 
 // Actions
 import { AddInDb, verifySteps } from '../../actions/DegreeRiskActions';
@@ -162,6 +162,9 @@ export default function Symptoms() {
         >
           Continuar
         </Button>
+        <ButtonOption type="button" onClick={() => submitSymptoms()}>
+          Não tenho certeza.
+        </ButtonOption>
       </Container>
     </>
   );

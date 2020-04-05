@@ -35,3 +35,15 @@ export const Container = styled.div`
   margin-top: 88px;
   text-align: left;
 `;
+
+export const ButtonOption = styled.button`
+  width: 100%;
+  border: 0;
+  background: transparent;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #bdbdbd;
+  margin: 32px auto auto;
+  text-align: center;
+`;
