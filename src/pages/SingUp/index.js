@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { MdArrowForward } from 'react-icons/md';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -15,6 +15,9 @@ import { Container, Content } from './styles';
 
 export default function Home() {
   const history = useHistory();
+  const inputDateBirth = useRef();
+  const inputRefPhone = useRef();
+  const inputRefCpf = useRef();
 
   const [formState, setFormState] = useState({
     name: '',
@@ -36,15 +39,25 @@ export default function Home() {
     pregnant: true,
   });
 
-  function setState(event, state) {
+  function setState(event, state, maxLength) {
     const {
       target: { value },
     } = event;
-
-    setFormState({
-      ...formState,
-      [state]: value,
-    });
+    if (maxLength !== '') {
+      console.log(value.length);
+      console.log(maxLength);
+      if (value.length <= maxLength) {
+        setFormState({
+          ...formState,
+          [state]: value,
+        });
+      }
+    } else {
+      setFormState({
+        ...formState,
+        [state]: value,
+      });
+    }
   }
 
   function nextStep() {
@@ -69,7 +82,9 @@ export default function Home() {
   }
 
   function onBlurState(el) {
-    if (formState[el] === '') {
+    const nameArray = formState[el].split(' ');
+    console.log(nameArray);
+    if (formState[el] === '' || nameArray.length < 2 || nameArray[1] === '') {
       setError({
         ...error,
         [el]: true,
@@ -82,7 +97,10 @@ export default function Home() {
     }
   }
   function validateCpf(type) {
+    inputRefCpf.current.type = 'number';
     if (type === 'blur') {
+      inputRefCpf.current.maxlength = 10;
+      inputRefCpf.current.type = 'text';
       const { cpf } = formState;
       setFormState({
         ...formState,
@@ -111,7 +129,9 @@ export default function Home() {
   }
   function validateDateBirth(type) {
     const { dateBirth } = formState;
+    inputDateBirth.current.type = 'number';
     if (type === 'blur') {
+      inputDateBirth.current.type = 'text';
       setFormState({
         ...formState,
         dateBirth: dateBirth
@@ -139,8 +159,10 @@ export default function Home() {
   }
 
   function validatePhone(type) {
+    inputRefPhone.current.type = 'number';
     const { phone } = formState;
     if (type === 'blur') {
+      inputRefPhone.current.type = 'text';
       setFormState({
         ...formState,
         phone: phone
@@ -179,11 +201,13 @@ export default function Home() {
           value={formState.cpf}
           variant="outlined"
           error={error.cpf}
-          onChange={event => setState(event, 'cpf')}
+          onChange={event => setState(event, 'cpf', 11)}
           onBlur={() => validateCpf('blur')}
           onFocus={() => validateCpf()}
+          type="number"
+          inputRef={inputRefCpf}
           inputProps={{
-            maxLength: 11,
+            maxLength: 10,
           }}
         />
         <Input
@@ -192,8 +216,9 @@ export default function Home() {
           error={error.name}
           value={formState.name}
           variant="outlined"
-          onChange={event => setState(event, 'name')}
+          onChange={event => setState(event, 'name', '')}
           onBlur={() => onBlurState('name')}
+          type="text"
         />
         <Input
           required
@@ -201,52 +226,46 @@ export default function Home() {
           value={formState.dateBirth}
           error={error.dateBirth}
           variant="outlined"
-          onChange={event => setState(event, 'dateBirth')}
+          onChange={event => setState(event, 'dateBirth', 8)}
           onBlur={() => validateDateBirth('blur')}
           onFocus={() => validateDateBirth()}
-          inputProps={{
-            maxLength: 8,
-          }}
+          inputRef={inputDateBirth}
+          type="number"
         />
-
         <Select
           error={error.sexo}
           label="Sexo"
           value={formState.sexo}
-          onChange={event => setState(event, 'sexo')}
+          defaultValue="Não Identificar"
+          onChange={event => setState(event, 'sexo', '')}
         >
           <MenuItem value="Masculino">Masculino</MenuItem>
           <MenuItem value="Feminino">Feminino</MenuItem>
           <MenuItem value="Não Identificar">Não Identificar</MenuItem>
         </Select>
-
         <Select
           label="Gestante"
           disabled={formState.sexo !== 'Feminino'}
           style={{ background: formState.sexo !== 'Feminino' ? '#e0e0e0' : '' }}
-          error={error.pregnant || false}
+          error={formState.pregnant === ''}
           value={formState.pregnant || ''}
           defaultValue="Sim"
-          onChange={event => setState(event, 'pregnant')}
+          onChange={event => setState(event, 'pregnant', '')}
         >
           <MenuItem value="Não">Não</MenuItem>
           <MenuItem value="Sim">Sim</MenuItem>
         </Select>
-
         <Input
           required
           label="Celular"
           value={formState.phone}
           variant="outlined"
           error={error.phone}
-          onChange={event => setState(event, 'phone')}
+          onChange={event => setState(event, 'phone', 11)}
           onBlur={() => validatePhone('blur')}
           onFocus={() => validatePhone()}
-          inputProps={{
-            maxLength: 11,
-          }}
+          inputRef={inputRefPhone}
         />
-
         <Button
           variant="contained"
           theme="primary"
