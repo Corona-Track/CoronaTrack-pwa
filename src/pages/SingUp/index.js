@@ -182,10 +182,8 @@ export default function Home() {
           onChange={event => setState(event, 'cpf')}
           onBlur={() => validateCpf('blur')}
           onFocus={() => validateCpf()}
-          onInput={e => {
-            e.target.value = Math.max(0, parseInt(e.target.value))
-              .toString()
-              .slice(0, 11);
+          inputProps={{
+            maxLength: 11,
           }}
         />
         <Input
@@ -206,10 +204,8 @@ export default function Home() {
           onChange={event => setState(event, 'dateBirth')}
           onBlur={() => validateDateBirth('blur')}
           onFocus={() => validateDateBirth()}
-          onInput={e => {
-            e.target.value = Math.max(0, parseInt(e.target.value))
-              .toString()
-              .slice(0, 8);
+          inputProps={{
+            maxLength: 8,
           }}
         />
 
@@ -246,10 +242,8 @@ export default function Home() {
           onChange={event => setState(event, 'phone')}
           onBlur={() => validatePhone('blur')}
           onFocus={() => validatePhone()}
-          onInput={e => {
-            e.target.value = Math.max(0, parseInt(e.target.value))
-              .toString()
-              .slice(0, 11);
+          inputProps={{
+            maxLength: 11,
           }}
         />
 
