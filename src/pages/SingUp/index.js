@@ -83,7 +83,7 @@ export default function Home() {
 
   function onBlurState(el) {
     const nameArray = formState[el].split(' ');
-    console.log(nameArray);
+
     if (formState[el] === '' || nameArray.length < 2 || nameArray[1] === '') {
       setError({
         ...error,
