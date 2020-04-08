@@ -2,11 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  margin-top: 88px;
   text-align: center;
 `;
 
@@ -42,4 +38,5 @@ export const ButtonOption = styled.button`
   text-align: center;
   color: #bdbdbd;
   margin: 32px 0;
+  text-align: center;
 `;

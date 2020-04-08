@@ -6,7 +6,7 @@ import { InputAdornment, IconButton } from '@material-ui/core';
 import { InputText } from './styles';
 
 export default function Input(props) {
-  const { label } = props;
+  const { label, type } = props;
   const [showPassword, setShowPassword] = useState(true);
 
   function IconEye() {
@@ -25,7 +25,7 @@ export default function Input(props) {
   return (
     <InputText
       {...props}
-      type={label === 'Password' && showPassword ? 'password' : 'text'}
+      type={label === 'Password' && showPassword ? 'password' : type}
       InputProps={{
         endAdornment: label === 'Password' ? IconEye() : '',
       }}

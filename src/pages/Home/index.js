@@ -11,7 +11,7 @@ import Button from '../../components/Button';
 import Header from '../../components/Header';
 
 // Actions
-import { verifySteps } from '../../actions/DegreeRiskActions';
+import { setPosition } from '../../actions/AuthActions';
 
 // Styles
 import { Container, ShareContainer } from './styles';
@@ -21,6 +21,7 @@ export default function Home() {
   const Dispatch = useDispatch();
 
   const [shareActive, setShareActive] = useState(false);
+  const [coord, setCoord] = useState({});
 
   const uid = localStorage.getItem('Uid');
 
@@ -33,9 +34,35 @@ export default function Home() {
   }
 
   useEffect(() => {
-    if (uid) {
-      Dispatch(verifySteps(uid, history));
+    // if (uid) {
+    //   Dispatch(getPosition(uid)).then(res => {
+    //     setCoord(res);
+    //   });
+    // }
+    // Pedi permisão de acessar a localização
+
+    function getPosition() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          ({ coords: { latitude, longitude } }) => {
+            const coords = {
+              latitude,
+              longitude,
+            };
+            setCoord(coords);
+            Dispatch(setPosition(uid, coords));
+          }
+        );
+      } else {
+        alert('Precisamos da sua localização para melhor funcionamento do app');
+        setCoord({
+          latitude: 0,
+          longitude: 0,
+        });
+        getPosition();
+      }
     }
+    getPosition();
   }, []);
 
   return (
@@ -43,11 +70,13 @@ export default function Home() {
       <Container>
         <Header />
         <Share active={shareActive} onClose={handleShare} />
+
         <Iframe
-          url="http://site58987541.westus2.cloudapp.azure.com:81/epidemia/Grafico/Map?modulo=Geociencia&acesso_publico=S&acesso_mobile=S"
+          url={`https://mapa.comunicabeach.com.br/epidemia/Grafico/Map?modulo=Geociencia&acesso_publico=S&acesso_mobile=S&integracao=S&latitude=${coord.latitude}&longitude=${coord.longitude}&zoom=14&uid=${uid}`}
           width="100%"
           height="100%"
         />
+
         <ShareContainer>
           <Button
             variant="contained"

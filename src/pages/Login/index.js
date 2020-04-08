@@ -12,7 +12,7 @@ import Loading from '../../components/Loading';
 import { SignInAction, loginWithFacebook } from '../../actions/AuthActions';
 
 // Assets
-import logo from '../../assets/images/logo.png';
+import logo from '../../assets/images/logo.svg';
 
 // Styles
 import { Container, Image, Content, Error, Line } from './styles';

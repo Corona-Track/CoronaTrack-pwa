@@ -4,17 +4,15 @@ import { $colorDanger } from '../../styles/variables';
 export const Container = styled.div`
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  margin-top: 88px;
+  text-align: center;
 `;
 
 export const Content = styled.div`
   padding: 0 25px;
 `;
 export const Image = styled.img`
-  margin-bottom: 32px;
+  margin-bottom: 40px;
 `;
 
 export const Error = styled.p`

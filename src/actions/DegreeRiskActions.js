@@ -1,38 +1,38 @@
 import firebase from '../FirebaseConnection';
 
+export const getPosition = uid => {
+  return dispatch => {
+    return new Promise(resolve => {
+      firebase
+        .database()
+        .ref(`tracking/${uid}`)
+        .once('value', snapshot => {
+          resolve(snapshot.val());
+        });
+    });
+  };
+};
 export const verifySteps = (uid, history, path = '') => {
   return dispatch => {
-    firebase
-      .database()
-      .ref(`healthScreening/${uid}${path}`)
-      .once('value', snapshot => {
-        //   if (snapshot.val()) {
-        //     const {
-        //       contactWithSuspect,
-        //       contactWithConfirmed,
-        //       Sintomas,
-        //       Cronicas,
-        //     } = snapshot.val();
-        //     if (contactWithSuspect && !contactWithSuspect) {
-        //       history.push('/diagnostico/confirmados');
-        //       return;
-        //     }
-        //     if (
-        //       (!contactWithSuspect && contactWithConfirmed) ||
-        //       (!contactWithSuspect && !contactWithConfirmed)
-        //     ) {
-        //       history.push('/diagnostico/suspeitos');
-        //       return;
-        //     }
-        //     if (Sintomas && !Cronicas) {
-        //       history.push('/doencas/cronicas');
-        //       return;
-        //     }
-        //     if ((!Sintomas && Cronicas) || (!Sintomas && !Cronicas)) {
-        //       history.push(' /sintomas');
-        //     }
-        //   }
-      });
+    // firebase
+    //   .database()
+    //   .ref(`healthScreening/${uid}${path}`)
+    //   .once('value', snapshot => {
+    //     if (snapshot.val()) {
+    //       const { contactWithSuspect, contactWithConfirmed } = snapshot.val();
+    //       if (contactWithSuspect && !contactWithSuspect) {
+    //         history.push('/diagnostico/confirmados');
+    //         return;
+    //       }
+    //       if (
+    //         (!contactWithSuspect && contactWithConfirmed) ||
+    //         (!contactWithSuspect && !contactWithConfirmed)
+    //       ) {
+    //         history.push('/diagnostico/suspeitos');
+    //       }
+    //       history.push('/');
+    //     }
+    //   });
   };
 };
 
@@ -44,6 +44,7 @@ export const AddInDb = (uid, data, path = '') => {
         .ref(`healthScreening/${uid}${path}`)
         .update({ ...data })
         .then(() => {
+          console.log('jonassss');
           resolve();
         })
         .catch(e => {

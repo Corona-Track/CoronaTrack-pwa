@@ -7,6 +7,7 @@ export const Container = styled.div`
   background-color: #fff;
   padding: 20px 30px;
   justify-content: space-between;
+  text-align: left;
 `;
 
 export const H1 = styled.h1`
@@ -16,6 +17,7 @@ export const H1 = styled.h1`
 `;
 
 export const MenuContainer = styled.div`
+  text-align: left;
   display: ${props =>
     props.active ? 'block' : 'none'}; /* Hidden by default */
   position: fixed; /* Stay in place */
@@ -87,6 +89,6 @@ export const Version = styled.p`
 `;
 
 export const Image = styled.img`
-  width: auto;
-  height: auto;
+  width: 87px;
+  height: 40px;
 `;

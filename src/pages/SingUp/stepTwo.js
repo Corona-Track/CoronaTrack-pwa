@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
@@ -9,7 +9,7 @@ import { MdArrowForward, MdMyLocation } from 'react-icons/md';
 import { createNewUser, setPosition } from '../../actions/AuthActions';
 
 // Components
-import Header from '../../components/Header';
+import HeaderRouter from '../../components/HeaderRouter';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import Loading from '../../components/Loading';
@@ -32,6 +32,7 @@ export default function Home() {
   });
 
   const [loading, setLoading] = useState(false);
+  const [isFacebook] = useState(localStorage.getItem('loginType') || false);
 
   const [location, setLocation] = useState('');
 
@@ -68,9 +69,11 @@ export default function Home() {
             longitude,
           };
           setLocation(coords);
+          alert('Dados gravados com sucesso!');
         }
       );
     } else {
+      alert('Precisamos da sua localização para melhor funcionamento do app');
       setLocation('');
     }
   }
@@ -157,7 +160,6 @@ export default function Home() {
         ...JSON.parse(infosTemp),
         ...formState,
       };
-
       Dispatch(createNewUser(formState.email, formState.password, newForm))
         .then(({ uid }) => {
           Dispatch(setPosition(uid, location))
@@ -176,11 +178,18 @@ export default function Home() {
     }
   }
 
+  useEffect(() => {
+    const newFormState = formState;
+    delete newFormState.email;
+    delete newFormState.password;
+    setFormState(newFormState);
+  }, [isFacebook]);
+
   return (
     <Container>
       <Loading open={loading} />
       <Content>
-        <Header title="Criar Conta" onClick={() => history.goBack()} />
+        <HeaderRouter title="Criar Conta" onClick={() => history.goBack()} />
         <p className="description">Dados de Endereço</p>
 
         <Button
@@ -195,7 +204,7 @@ export default function Home() {
         <Input
           required
           label="CEP"
-          value={formState.zipCode}
+          value={formState.zipCode || ''}
           error={error.zipCode}
           variant="outlined"
           onChange={event => setState(event, 'zipCode')}
@@ -204,7 +213,7 @@ export default function Home() {
         <Input
           required
           label="Rua"
-          value={formState.street}
+          value={formState.street || ''}
           error={error.street}
           variant="outlined"
           onChange={event => setState(event, 'dateBirth')}
@@ -234,28 +243,31 @@ export default function Home() {
           variant="outlined"
           onChange={event => setState(event, 'uf')}
         />
-        <Input
-          required
-          label="E-mail"
-          error={error.email}
-          value={formState.email}
-          variant="outlined"
-          onChange={event => setState(event, 'email')}
-          helperText={error.email && 'Digite um e-mail valido!'}
-          onBlur={() => validateEmail('blur')}
-          onFocus={() => validateEmail()}
-        />
+        {!isFacebook && (
+          <>
+            <Input
+              required
+              label="E-mail"
+              error={error.email}
+              value={formState.email}
+              variant="outlined"
+              onChange={event => setState(event, 'email')}
+              helperText={error.email && 'Digite um e-mail valido!'}
+              onBlur={() => validateEmail('blur')}
+              onFocus={() => validateEmail()}
+            />
 
-        <Input
-          variant="outlined"
-          label="Password"
-          value={formState.password}
-          error={error.password}
-          helperText="Digite uma senha com mais de 6 caracteres"
-          onChange={event => setState(event, 'password')}
-          onBlur={() => validatePassword('blur')}
-        />
-
+            <Input
+              variant="outlined"
+              label="Password"
+              value={formState.password}
+              error={error.password}
+              helperText="Digite uma senha com mais de 6 caracteres"
+              onChange={event => setState(event, 'password')}
+              onBlur={() => validatePassword('blur')}
+            />
+          </>
+        )}
         {errorMessage !== '' && <Error>{errorMessage}</Error>}
 
         <Button

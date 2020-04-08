@@ -1,5 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles';
+import styled from 'styled-components';
 import { $gray600, $gray700 } from '../../styles/variables';
+
+export const Container = styled.div`
+  margin-top: 88px;
+`;
 
 export const useStyles = makeStyles(() => ({
   result: {

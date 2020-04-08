@@ -6,7 +6,10 @@
 .pnp.js
 
 # Firebase Config
-/src/FirebaseConnection.js
+#/src/FirebaseConnection.js
+
+# Testando
+package-lock.json
 
 # testing
 /coverage

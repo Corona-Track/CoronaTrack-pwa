@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Typography } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
-import Container from '@material-ui/core/Container';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { useStyles } from './styles';
+import { useStyles, Container } from './styles';
 
 // Components
 import Button from '../../components/Button';
@@ -48,9 +47,9 @@ export default function Result() {
             <Box textAlign="center">RESULTADO</Box>
           </Typography>
           <ResultStatus result={result} />
-          <video width="320" height="240" autoPlay="autoplay">
+          {/* <video width="320" height="240" autoPlay="autoplay">
             <source src="video/QDEOL.mp4" type="video/mp4" />
-          </video>
+          </video> */}
           <Button
             variant="contained"
             theme="primary"
