@@ -8,9 +8,6 @@ export default createGlobalStyle`
       box-sizing: border-box;
     }
 
-    html, body, #root {
-      height: 100%;
-    }
 
   #root {
     max-width: 600px;
@@ -21,7 +18,7 @@ export default createGlobalStyle`
       -webkit-font-smoothing: antialiased;
     }
 
-    body, input, button, p, h1 {
+    body, input, button, p, h1, div, span {
       font-family: 'Prompt', sans-serif;
     }
 

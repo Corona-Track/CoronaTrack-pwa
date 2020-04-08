@@ -20,27 +20,19 @@ export default function ResultStatus({ result }) {
       >
         <Box textAlign="center">Seu grau de risco é</Box>
       </Typography>
-      <Typography
-        variant="subtitle3"
-        component="h3"
-        className={classes.resultStatusCalculated}
-      >
+      <Typography component="h3" className={classes.resultStatusCalculated}>
         <Box textAlign="center" color={resultColor} fontWeight="fontWeightBold">
           {Results.TITLE}
         </Box>
       </Typography>
-      <Typography
-        variant="subtitle4"
-        component="p"
-        className={classes.resultStatusDescription}
-      >
+      <Typography component="p" className={classes.resultStatusDescription}>
         {Results.DESCRIPTION_PREFIX}
         <Box
           component="span"
           color={resultColor}
           className={classes.resultStatusDescriptionFinalStatus}
         >
-          <Box color={resultColor} fontWeight="fontWeightBold">
+          <Box component="span" color={resultColor} fontWeight="fontWeightBold">
             risco é {result}
           </Box>
         </Box>

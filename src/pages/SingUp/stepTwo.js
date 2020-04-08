@@ -144,6 +144,7 @@ export default function Home() {
       if (element[1] === '') {
         return element;
       }
+      return false;
     });
 
     if (isEmpty) {
@@ -156,6 +157,7 @@ export default function Home() {
         'Precisamos da sua localização para o app funcionar da forma certa!'
       );
     } else {
+      setLoading(true);
       const newForm = {
         ...JSON.parse(infosTemp),
         ...formState,
@@ -164,7 +166,7 @@ export default function Home() {
         .then(({ uid }) => {
           Dispatch(setPosition(uid, location))
             .then(() => {
-              setLoading(true);
+              setLoading(false);
               history.push('/diagnostico/suspeitos');
             })
             .catch(() => {

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Typography } from '@material-ui/core';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import { useStyles, Container, ButtonOption } from './styles';
 
 // Actions
-import { AddInDb, verifySteps } from '../../actions/DegreeRiskActions';
+import { AddInDb } from '../../actions/DegreeRiskActions';
 
 // Components
 import Button from '../../components/Button';
@@ -37,10 +37,25 @@ export default function ChronicDiseases() {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
 
-  const submitChronicDiseases = () => {
+  const submitChronicDiseases = empty => {
     // submitChronicDiseases(state);
+    const resetState = {
+      iabetes: false,
+      hypertension: false,
+      heartFailure: false,
+      copd: false,
+      severeAsthma: false,
+      hiv: false,
+      cancer: false,
+      transplanted: false,
+      immunosuppressantUser: false,
+      DoencasCronicas: false,
+    };
+    const validateState = empty ? resetState : state;
+
     let newState = {};
-    Object.entries(state).forEach(item => {
+
+    Object.entries(validateState).forEach(item => {
       newState = {
         ...newState,
         [item[0]]: item[1] ? 1 : 0,
@@ -68,13 +83,6 @@ export default function ChronicDiseases() {
     transplanted,
     immunosuppressantUser,
   } = state;
-
-  useEffect(() => {
-    const uid = localStorage.getItem('Uid');
-    if (uid) {
-      Dispatch(verifySteps(uid, history));
-    }
-  }, []);
 
   return (
     <Container className={classes.chronicDiseases}>
@@ -181,12 +189,15 @@ export default function ChronicDiseases() {
       <Button
         variant="contained"
         theme="primary"
-        onClick={() => submitChronicDiseases(state)}
+        onClick={() => submitChronicDiseases()}
         className={classes.chronicDiseasesBtn}
       >
         Continuar
       </Button>
-      <ButtonOption type="button" onClick={() => submitChronicDiseases()}>
+      <ButtonOption
+        type="button"
+        onClick={() => submitChronicDiseases('empty')}
+      >
         Não tenho nenhuma
       </ButtonOption>
     </Container>

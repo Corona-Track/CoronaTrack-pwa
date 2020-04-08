@@ -36,7 +36,7 @@ export const MenuLeft = styled.div`
   height: 100vh;
   background-color: #fff;
   z-index: 1;
-  padding: 30px 35px;
+  padding: 30px 28px;
 `;
 
 export const ItemMenu = styled.div`

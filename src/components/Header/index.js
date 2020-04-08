@@ -3,7 +3,7 @@ import { useHistory, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import {
   FiX,
-  FiUser,
+  // FiUser,
   FiShare2,
   FiMapPin,
   FiClipboard,
@@ -90,7 +90,7 @@ export default function Header({ title, onClick }) {
         setInfos(res);
       });
     }
-  }, []);
+  }, [Dispatch]);
 
   return (
     <>
@@ -127,8 +127,8 @@ export default function Header({ title, onClick }) {
             <ItemMenu as={Link} to="#">
               {/* <IconMenu Component={FiUser} /> MEUS DADOS */}
             </ItemMenu>
-            <ItemMenu as={Link} to="#">
-              {/* <IconMenu Component={FiClipboard} /> MEUS SISTEMAS */}
+            <ItemMenu as={Link} to="/sintomas">
+              <IconMenu Component={FiClipboard} /> REPORTAR SINTOMAS
             </ItemMenu>
             <ItemMenu as={Link} to="/" onClick={() => setMenu(false)}>
               <IconMenu Component={FiMapPin} /> MAPA DE RISCO

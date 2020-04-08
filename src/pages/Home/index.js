@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { FiShare2 } from 'react-icons/fi';
 
@@ -17,7 +16,6 @@ import { setPosition } from '../../actions/AuthActions';
 import { Container, ShareContainer } from './styles';
 
 export default function Home() {
-  const history = useHistory();
   const Dispatch = useDispatch();
 
   const [shareActive, setShareActive] = useState(false);
@@ -25,22 +23,11 @@ export default function Home() {
 
   const uid = localStorage.getItem('Uid');
 
-  // function CalcsymptEval() {
-  //   Dispatch(symptEval(uid));
-  // }
-
   function handleShare() {
     setShareActive(!shareActive);
   }
 
   useEffect(() => {
-    // if (uid) {
-    //   Dispatch(getPosition(uid)).then(res => {
-    //     setCoord(res);
-    //   });
-    // }
-    // Pedi permisão de acessar a localização
-
     function getPosition() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -63,7 +50,7 @@ export default function Home() {
       }
     }
     getPosition();
-  }, []);
+  }, [Dispatch, uid]);
 
   return (
     <>

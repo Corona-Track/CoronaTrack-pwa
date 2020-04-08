@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -6,8 +6,10 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useStyles, Container, ButtonOption } from './styles';
 
+import Loading from '../../components/Loading';
+
 // Actions
-import { AddInDb, verifySteps } from '../../actions/DegreeRiskActions';
+import { AddInDb } from '../../actions/DegreeRiskActions';
 
 // Components
 import Button from '../../components/Button';
@@ -18,7 +20,7 @@ export default function Symptoms() {
   const Dispatch = useDispatch();
 
   const classes = useStyles();
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     coriza: 0,
     dorcabeca: 0,
     tosse: 0,
@@ -29,18 +31,34 @@ export default function Symptoms() {
     diarreia: 0,
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleChange = event => {
     setState({ ...state, [event.target.name]: event.target.checked ? 1 : 0 });
   };
 
-  const submitSymptoms = () => {
+  const submitSymptoms = empty => {
+    setLoading(true);
     const uid = localStorage.getItem('Uid');
+    const stateReset = {
+      coriza: 0,
+      dorcabeca: 0,
+      tosse: 0,
+      dorgarganta: 0,
+      febre: 0,
+      doresmusculares: 0,
+      dificuldaderespirar: 0,
+      diarreia: 0,
+    };
+    const newState = empty ? stateReset : state;
 
-    Dispatch(AddInDb(uid, state, '/Sintomas'))
+    Dispatch(AddInDb(uid, newState, '/Sintomas'))
       .then(() => {
         history.push('/resultado');
+        setLoading(false);
       })
       .catch(() => {
+        setLoading(false);
         submitSymptoms();
       });
   };
@@ -56,15 +74,9 @@ export default function Symptoms() {
     diarreia,
   } = state;
 
-  useEffect(() => {
-    const uid = localStorage.getItem('Uid');
-    if (uid) {
-      Dispatch(verifySteps(uid, history));
-    }
-  }, []);
-
   return (
     <>
+      <Loading open={loading} />
       <Container className={classes.symptoms}>
         <p className={classes.symptomsLabel}>SINTOMÁTICO</p>
         <h1 className={classes.symptomsQuestion}>
@@ -162,7 +174,7 @@ export default function Symptoms() {
         >
           Continuar
         </Button>
-        <ButtonOption type="button" onClick={() => submitSymptoms()}>
+        <ButtonOption type="button" onClick={() => submitSymptoms('empty')}>
           Não tenho nenhuma
         </ButtonOption>
       </Container>
