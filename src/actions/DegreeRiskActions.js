@@ -105,19 +105,86 @@ export function getInfos(uid) {
 // }
 
 function calcSymptEval(sintomas) {
-  const posSintomas = [115, 11, 113, 7, 6, 15, 41, 1];
-  const posTotal = 138;
+  /**
+   * 55924 laboratory confirmed cases,typical signs and symptoms include:
+   * fever (87.9%)
+   * dry cough (67.7%)
+   * fatigue (38.1%)
+   * sputum production (33.4%),
+   * shortness of breath (18.6%),
+   * sore throat (13.9%),
+   * headache (13.6%),
+   * myalgia or arthralgia (14.8%),
+   * chills (11.4%),
+   * nausea or vomiting (5.0%),
+   * nasal congestion (4.8%),
+   * diarrhea (3.7%),
+   * hemoptysis (0.9%),
+   * conjunctival congestion (0.8%)
+   */
 
-  const negSintomas = [45, 22, 44, 4, 3, 33, 12, 7];
-  const negTotal = 427;
+  /*
+   * febre (87,9%),
+   * tosse seca (67,7%),
+   * fadiga (38,1%),
+   * Corissa (33,4%),
+   * falta de ar (18,6%),
+   * dor de garganta (13,9%),
+   * dor de cabeça (13,6%),
+   * mialgia ou artralgia (14,8%),
+   * calafrios (11,4%),
+   * náusea ou vômito (5,0%),
+   * congestão nasal (4,8%),
+   * diarréia (3,7%),
+   * hemoptise (0,9%),
+   * congestão conjuntival (0,8%)
+   */
+
+  const posSintomas = [
+    0.879, // febre
+    0.677, // tosse seca
+    0.381, // fadiga
+    0.334, // Corissa
+    0.186, // falta de ar
+    0.139, // dor de garganta
+    0.136, // dor de cabeça
+    0.148, // mialgia ou artralgia
+    0.114, // calafrios
+    0.5, // náusea ou vômito
+    0.48, // congestão nasal
+    0.37, // diarréia
+    0.9, // hemoptise
+    0.8, // congestão conjuntival
+  ];
+
+  const posTotal = 13717;
+
+  const negSintomas = [
+    0.808852381,
+    0.852779365,
+    0.917147619,
+    0.927368254,
+    0.959552381,
+    0.969773016,
+    0.970425397,
+    0.967815873,
+    0.975209524,
+    0.989126984,
+    0.989561905,
+    0.991953968,
+    0.998042857,
+    0.998260317,
+  ];
+
+  const negTotal = 49283;
 
   let nt = 1;
   let pt = 1;
 
   sintomas.forEach((item, index) => {
     if (item === 1) {
-      pt = (pt * posSintomas[index]) / posTotal;
-      nt = (nt * negSintomas[index]) / negTotal;
+      pt *= posSintomas[index];
+      nt *= negSintomas[index];
     }
   });
 
@@ -141,35 +208,47 @@ export const symptEval = uid => {
 
           const {
             febre,
-            dorDeCabeca,
-            tosse,
+            tosseSeca,
+            fadiga,
+            tosseComCatarro,
+            faltaDeAr,
             dorDeGarganta,
-            coriza,
-            doresMusculares,
-            dificuldadesRespiratorias,
+            dorDeCabeca,
+            dorNoCorpo,
+            calafrio,
+            nauseaOuVomito,
+            narizEntupido,
             diarreia,
+            tosseComSangue,
+            olhosVermelhos,
           } = sintomas;
 
-          const testeFinal = calcSymptEval([
+          const calGrauDeRisco = calcSymptEval([
             febre,
-            dorDeCabeca,
-            tosse,
+            tosseSeca,
+            fadiga,
+            tosseComCatarro,
+            faltaDeAr,
             dorDeGarganta,
-            coriza,
-            doresMusculares,
-            dificuldadesRespiratorias,
+            dorDeCabeca,
+            dorNoCorpo,
+            calafrio,
+            nauseaOuVomito,
+            narizEntupido,
             diarreia,
+            tosseComSangue,
+            olhosVermelhos,
           ]);
 
           let grauDeRisco = '';
 
-          if (testeFinal < 0.4) {
+          if (calGrauDeRisco < 0.06) {
             grauDeRisco = 'Baixo';
           }
-          if (testeFinal >= 0.4 && testeFinal < 0.8) {
+          if (calGrauDeRisco >= 0.06 && calGrauDeRisco < 0.1) {
             grauDeRisco = 'Médio';
           }
-          if (testeFinal >= 0.8) {
+          if (calGrauDeRisco >= 0.1) {
             grauDeRisco = 'Alto';
           }
 
