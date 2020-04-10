@@ -190,7 +190,7 @@ export default function Symptoms() {
                   name="calafrio"
                 />
               }
-              label="Cala Frio"
+              label="Calafrio"
             />
             <FormControlLabel
               control={
