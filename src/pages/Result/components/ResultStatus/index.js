@@ -30,14 +30,16 @@ export default function ResultStatus({ result }) {
         <Box
           component="span"
           color={resultColor}
-          className={classes.resultStatusDescriptionFinalStatus}
-        >
+          className={classes.resultStatusDescriptionFinalStatus}>
           <Box component="span" color={resultColor} fontWeight="fontWeightBold">
             risco é {result}
           </Box>
         </Box>
         {Results.DESCRIPTION_SUFIX}
       </Typography>
+      <div style={{ textAlign: "center", width: "100%", marginTop: 20 }}>
+        <iframe width="100%" autoplay height="300" src={Results.VIDEO} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
     </Container>
   );
 }
