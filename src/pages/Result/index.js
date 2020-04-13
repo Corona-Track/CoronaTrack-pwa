@@ -21,8 +21,10 @@ export default function Result() {
   const classes = useStyles();
   const [result, setResult] = useState('');
 
+  const goToPartner = () => {
+    history.push('/teleorientacao');
+  };
   const goToMap = () => {
-    // return redirect to map (based on user lat and lng?)
     history.push('/');
   };
   useEffect(() => {
@@ -38,28 +40,30 @@ export default function Result() {
       {result === '' ? (
         <Loading open />
       ) : (
-        <Container className={classes.result}>
-          <h1 className={classes.resultLabel}>
-            <Box textAlign="center">RESULTADO</Box>
-          </h1>
-          <ResultStatus result={result} />
-          {/* <video width="320" height="240" autoPlay="autoplay">
-            <source src="video/QDEOL.mp4" type="video/mp4" />
-          </video> */}
-          <Button
-            variant="contained"
-            theme="primary"
-            onClick={() => goToMap()}
-            className={classes.resultBtn}
-          >
-            VEJA NO MAPA
+          <Container className={classes.result}>
+            <h5 className={classes.resultLabel}>
+              <Box textAlign="center">RESULTADO</Box>
+            </h5>
+            <ResultStatus result={result} />
+            <Button
+              variant="contained"
+              theme="primary"
+              onClick={() => goToPartner()}
+              className={[classes.resultBtn, classes.btnGroup]}>
+              AGENDAR TELEORIENTAÇÃO
+            </Button>
+            <Button
+              variant="outlined"
+              onClick={() => goToMap()}
+              className={classes.resultBtn}>
+              VEJA NO MAPA
           </Button>
-          <p className={classes.resultFooter}>
-            Veja a evolução de risco na sua cidade, com base em dados de outros
-            usuários.
+            <p className={classes.resultFooter}>
+              Veja a evolução de risco na sua cidade, com base em dados de outros
+              usuários.
           </p>
-        </Container>
-      )}
+          </Container>
+        )}
     </>
   );
 }

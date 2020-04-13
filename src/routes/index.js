@@ -20,6 +20,8 @@ import Login from '../pages/Login';
 import SignUp from '../pages/SingUp';
 import SignUpNextStep from '../pages/SingUp/stepTwo';
 
+import Teleorientation from '../pages/Teleorientation';
+
 // Services
 import history from '../services/history';
 
@@ -52,7 +54,7 @@ export default function Routes() {
         />
         <Route path="/sintomas" exact component={Symptoms} isPrivate />
         <Route path="/resultado" exact component={Result} isPrivate />
-
+        <Route path="/teleorientacao" exact component={Teleorientation} isPrivate />
         <Route path="/login" exact component={Login} />
         <Route path="/signUp" exact component={SignUp} />
         <Route path="/signUp/nextStep" exact component={SignUpNextStep} />
