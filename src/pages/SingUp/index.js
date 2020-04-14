@@ -237,7 +237,13 @@ export default function Home() {
           label="Sexo"
           value={formState.sexo}
           defaultValue="Não Identificar"
-          onChange={event => setState(event, 'sexo', '')}
+          onChange={event => {
+            setFormState({
+              ...formState,
+              sexo: event && event.target && event.target.value ? event.target.value : null,
+              pregnant: null
+            });
+          }}
         >
           <MenuItem value="Masculino">Masculino</MenuItem>
           <MenuItem value="Feminino">Feminino</MenuItem>
@@ -272,7 +278,7 @@ export default function Home() {
           endIcon={<MdArrowForward />}
           onClick={() => nextStep()}
         >
-          Proximo
+          Próximo
         </Button>
       </Content>
     </Container>

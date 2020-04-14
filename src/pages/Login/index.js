@@ -72,7 +72,6 @@ export default function Home() {
 
   useEffect(() => {
     const loginType = localStorage.getItem('loginType') || null;
-
     if (loginType) {
       return history.push('/signUp');
     }

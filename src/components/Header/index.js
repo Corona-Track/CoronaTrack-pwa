@@ -10,6 +10,7 @@ import {
   FiLogOut,
   FiArrowDownRight,
   FiMenu,
+  FiMonitor
 } from 'react-icons/fi';
 
 import {
@@ -135,6 +136,9 @@ export default function Header({ title, onClick }) {
             </ItemMenu>
             <ItemMenu onClick={handleShare}>
               <IconMenu Component={FiShare2} /> COMPARTILHE
+            </ItemMenu>
+            <ItemMenu as={Link} to="/teleorientacao" onClick={() => setMenu(false)}>
+              <IconMenu Component={FiMonitor} /> TELEORIENTAÇÃO
             </ItemMenu>
           </Items>
           <ItemMenu onClick={() => setSignOute()}>

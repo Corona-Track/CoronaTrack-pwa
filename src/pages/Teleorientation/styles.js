@@ -5,6 +5,12 @@ import { $gray600, $gray700 } from '../../styles/variables';
 export const Container = styled.div`
 `;
 
+export const Image = styled.img`
+  max-width: 200px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+`;
+
 export const useStyles = makeStyles(() => ({
   result: {
     paddingLeft: '2rem',
@@ -30,4 +36,35 @@ export const useStyles = makeStyles(() => ({
     marginBottom: '30px',
     color: $gray700,
   },
+  resultStatus: {
+    marginTop: '2rem',
+    marginBottom: '2rem',
+  },
+  resultStatusTitle: {
+    margin: '-0.5rem',
+    '& div': {
+      fontWeight: 500,
+      fontFamily: "'Prompt', sans-serif",
+    },
+  },
+  resultStatusCalculated: {
+    textTransform: 'uppercase',
+    fontSize: '3rem',
+    '& h3 > div': {
+      lineHeight: '3rem',
+    },
+  },
+  resultStatusDescription: {
+    textAlign: 'center',
+    color: $gray700,
+    fontFamily: "'Prompt', sans-serif",
+  },
+  resultStatusDescriptionFinalStatus: {
+    '& div': {
+      display: 'inline-block',
+    },
+  },
+  btnGroup: {
+    marginTop: '3rem',
+  }
 }));

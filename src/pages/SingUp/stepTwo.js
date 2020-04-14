@@ -152,19 +152,28 @@ export default function Home() {
         ...error,
         [isEmpty[0]]: true,
       });
-    } else if (location === '') {
+    }
+    else if (location === '') {
       setErrorMessage(
         'Precisamos da sua localização para o app funcionar da forma certa!'
       );
-    } else {
+    }
+    else {
       setLoading(true);
       const newForm = {
         ...JSON.parse(infosTemp),
         ...formState,
       };
       Dispatch(createNewUser(formState.email, formState.password, newForm))
-        .then(({ uid }) => {
-          Dispatch(setPosition(uid, location))
+        .then((response) => {
+          let uidToUse = null;
+          if (response) {
+            let { uid } = response;
+            uidToUse = uid;
+          } else {
+            uidToUse = localStorage.getItem("Uid")
+          }
+          Dispatch(setPosition(uidToUse, location))
             .then(() => {
               setLoading(false);
               history.push('/diagnostico/suspeitos');
@@ -278,7 +287,7 @@ export default function Home() {
           endIcon={<MdArrowForward />}
           onClick={() => createUser()}
         >
-          Proximo
+          Próximo
         </Button>
       </Content>
     </Container>
