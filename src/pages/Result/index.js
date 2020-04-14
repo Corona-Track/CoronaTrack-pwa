@@ -29,6 +29,7 @@ export default function Result() {
   };
   useEffect(() => {
     const uid = localStorage.getItem('Uid');
+    console.log(uid);
     Dispatch(symptEval(uid)).then(res => {
       const newResult = res.replace('é', 'e').toLowerCase();
       setResult(newResult);

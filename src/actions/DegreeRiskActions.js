@@ -44,11 +44,9 @@ export const AddInDb = (uid, data, path = '') => {
         .ref(`healthScreening/${uid}${path}`)
         .update({ ...data })
         .then(() => {
-          console.log('jonassss');
           resolve();
         })
         .catch(e => {
-          console.log(e);
           reject(new Error('Erro Ao Gravar os dados'));
         });
     });
@@ -105,93 +103,77 @@ export function getInfos(uid) {
 // }
 
 function calcSymptEval(sintomas) {
-  /**
-   * 55924 laboratory confirmed cases,typical signs and symptoms include:
-   * fever (87.9%)
-   * dry cough (67.7%)
-   * fatigue (38.1%)
-   * sputum production (33.4%),
-   * shortness of breath (18.6%),
-   * sore throat (13.9%),
-   * headache (13.6%),
-   * myalgia or arthralgia (14.8%),
-   * chills (11.4%),
-   * nausea or vomiting (5.0%),
-   * nasal congestion (4.8%),
-   * diarrhea (3.7%),
-   * hemoptysis (0.9%),
-   * conjunctival congestion (0.8%)
-   */
-
   /*
-   * febre (87,9%),
-   * tosse seca (67,7%),
-   * fadiga (38,1%),
-   * Corissa (33,4%),
-   * falta de ar (18,6%),
-   * dor de garganta (13,9%),
-   * dor de cabeça (13,6%),
-   * mialgia ou artralgia (14,8%),
-   * calafrios (11,4%),
-   * náusea ou vômito (5,0%),
-   * congestão nasal (4,8%),
-   * diarréia (3,7%),
-   * hemoptise (0,9%),
-   * congestão conjuntival (0,8%)
-   */
+    lista final de sintomas (de acordo com o ministério da saúde)
 
-  const posSintomas = [
-    0.879, // febre
-    0.677, // tosse seca
-    0.381, // fadiga
-    0.334, // Corissa
-    0.186, // falta de ar
-    0.139, // dor de garganta
-    0.136, // dor de cabeça
-    0.148, // mialgia ou artralgia
-    0.114, // calafrios
-    0.5, // náusea ou vômito
-    0.48, // congestão nasal
-    0.37, // diarréia
-    0.9, // hemoptise
-    0.8, // congestão conjuntival
-  ];
 
-  const posTotal = 13717;
+    febre
+    tosse
+    dificuldade de respirar
+    dores musculares
+    exaustão ou fraqueza
+    perda do apetite
+    produção de catarro
+    dor de garganta
+    dor de cabeça
+    sangue pelo nariz ou boca
+    diarréia
+    enjôo ou vômito
+    dor de barriga
+    irritação nos olhos
 
-  const negSintomas = [
-    0.808852381,
-    0.852779365,
-    0.917147619,
-    0.927368254,
-    0.959552381,
-    0.969773016,
-    0.970425397,
-    0.967815873,
-    0.975209524,
-    0.989126984,
-    0.989561905,
-    0.991953968,
-    0.998042857,
-    0.998260317,
-  ];
+    confusão ou sonolência
+    tonturas
+    dor no peito
+    dificuldade de sentir cheiro ou gosto
 
-  const negTotal = 49283;
+    -----------------------------------------------------
 
-  let nt = 1;
-  let pt = 1;
+    prob = (0,8535*febre + 0,7008*tosse + 0,2259*dificuldade de respirar + 0,2250*dores musculares
+    + 0,3184*exaustão ou fraqueza + 0,2791*produção de catarro + 0,1739*dor de garganta + 0,1739*dor de cabeça
+    + 0,0075*sangue pelo nariz ou boca + 0,0816*diarréia + 0,0683*enjôo ou vômito + 0,0201* dor de barriga
+    + 0,0067*irritação nos olhos)/3,1348
 
-  sintomas.forEach((item, index) => {
-    if (item === 1) {
-      pt *= posSintomas[index];
-      nt *= negSintomas[index];
-    }
-  });
+    a partir de 0.48 é alto risco
+    de 0.3 até 0.48 é médio risco
+    até 0.3 é baixo risco
 
-  const fracPos = posTotal * pt;
-  const fracNeg = negTotal * nt;
+    qualquer pessoa com prob acima de 0.4 e pelo menos 1 comorbidade tem alto risco
+  */
 
-  return fracPos / (fracPos + fracNeg);
+  const {
+    febre,
+    tosse,
+    dificuldadeDeRespirar,
+    doresMusculares,
+    exaustaoOuFraqueza,
+    producaoDeCatarro,
+    dorDeGarganta,
+    dorDeCabeca,
+    sanguePeloNarizOuBoca,
+    diarreia,
+    enjooOuVomito,
+    dorDeBarriga,
+    irritacaoNosOlhos,
+  } = sintomas;
+
+  const probTotal =
+    (0.8535 * febre +
+      0.7008 * tosse +
+      0.2259 * dificuldadeDeRespirar +
+      0.225 * doresMusculares +
+      0.3184 * exaustaoOuFraqueza +
+      0.2791 * producaoDeCatarro +
+      0.1739 * dorDeGarganta +
+      0.1739 * dorDeCabeca +
+      0.0075 * sanguePeloNarizOuBoca +
+      0.0816 * diarreia +
+      0.0683 * enjooOuVomito +
+      0.0201 * dorDeBarriga +
+      0.0067 * irritacaoNosOlhos) /
+    3.1348;
+
+  return probTotal;
 }
 
 export const symptEval = uid => {
@@ -206,61 +188,54 @@ export const symptEval = uid => {
           delete sintomas.contactWithConfirmed;
           delete sintomas.contactWithSuspect;
 
-          const {
-            febre,
-            tosseSeca,
-            fadiga,
-            tosseComCatarro,
-            faltaDeAr,
-            dorDeGarganta,
-            dorDeCabeca,
-            dorNoCorpo,
-            calafrio,
-            nauseaOuVomito,
-            narizEntupido,
-            diarreia,
-            tosseComSangue,
-            olhosVermelhos,
-          } = sintomas;
-
-          const calGrauDeRisco = calcSymptEval([
-            febre,
-            tosseSeca,
-            fadiga,
-            tosseComCatarro,
-            faltaDeAr,
-            dorDeGarganta,
-            dorDeCabeca,
-            dorNoCorpo,
-            calafrio,
-            nauseaOuVomito,
-            narizEntupido,
-            diarreia,
-            tosseComSangue,
-            olhosVermelhos,
-          ]);
-
-          let grauDeRisco = '';
-
-          if (calGrauDeRisco < 0.06) {
-            grauDeRisco = 'Baixo';
-          }
-          if (calGrauDeRisco >= 0.06 && calGrauDeRisco < 0.1) {
-            grauDeRisco = 'Médio';
-          }
-          if (calGrauDeRisco >= 0.1) {
-            grauDeRisco = 'Alto';
-          }
+          const calGrauDeRisco = calcSymptEval(sintomas);
 
           firebase
             .database()
-            .ref(`healthScreening/${uid}/Sintomas`)
-            .update({ grauDeRisco })
-            .then(() => {
-              resolve(grauDeRisco);
-            })
-            .catch(() => {
-              reject(new Error('Erro Ao Gravar os dados'));
+            .ref(`Users/${uid}`)
+            .on('value', snap => {
+              const { dateBirth } = snap.val();
+              const userYear = dateBirth.split('/')[2];
+              const currentDate = new Date().getFullYear();
+              const age = currentDate - userYear;
+
+              firebase
+                .database()
+                .ref(`healthScreening/${uid}/Cronicas`)
+                .once('value', snaps => {
+                  const chronicSympt = snaps.val();
+                  const isChronic =
+                    Object.entries(chronicSympt).find(
+                      ([key, value]) => value === 1
+                    ) || false;
+                  let grauDeRisco = '';
+
+                  if (calGrauDeRisco < 0.3) {
+                    grauDeRisco = 'Baixo';
+                  }
+
+                  if (calGrauDeRisco >= 0.3 && calGrauDeRisco < 0.48) {
+                    grauDeRisco = 'Médio';
+                  }
+                  if (
+                    calGrauDeRisco >= 0.48 ||
+                    (calGrauDeRisco > 0.4 && isChronic) ||
+                    (calGrauDeRisco > 0.4 && age >= 59)
+                  ) {
+                    grauDeRisco = 'Alto';
+                  }
+
+                  firebase
+                    .database()
+                    .ref(`healthScreening/${uid}/Sintomas`)
+                    .update({ grauDeRisco, prob: calGrauDeRisco })
+                    .then(() => {
+                      resolve(grauDeRisco);
+                    })
+                    .catch(() => {
+                      reject(new Error('Erro Ao Gravar os dados'));
+                    });
+                });
             });
         });
     });
