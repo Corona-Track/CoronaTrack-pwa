@@ -22,19 +22,23 @@ export default function Symptoms() {
   const classes = useStyles();
   const [state, setState] = useState({
     febre: 0,
-    tosseSeca: 0,
-    fadiga: 0,
-    tosseComCatarro: 0,
-    faltaDeAr: 0,
+    tosse: 0,
+    dificuldadeDeRespirar: 0,
+    doresMusculares: 0,
+    exaustaoOuFraqueza: 0,
+    perdaDoApetite: 0,
+    producaoDeCatarro: 0,
     dorDeGarganta: 0,
     dorDeCabeca: 0,
-    dorNoCorpo: 0,
-    calafrio: 0,
-    nauseaOuVomito: 0,
-    narizEntupido: 0,
+    sanguePeloNarizOuBoca: 0,
     diarreia: 0,
-    tosseComSangue: 0,
-    olhosVermelhos: 0,
+    enjooOuVomito: 0,
+    dorDeBarriga: 0,
+    irritacaoNosOlhos: 0,
+    confusaoOuSonolencia: 0,
+    tonturas: 0,
+    dorNoPeito: 0,
+    dificuldadeDeSentirCheiroOuGosto: 0,
   });
 
   const [loading, setLoading] = useState(false);
@@ -48,19 +52,23 @@ export default function Symptoms() {
     const uid = localStorage.getItem('Uid');
     const stateReset = {
       febre: 0,
-      tosseSeca: 0,
-      fadiga: 0,
-      tosseComCatarro: 0,
-      faltaDeAr: 0,
+      tosse: 0,
+      dificuldadeDeRespirar: 0,
+      doresMusculares: 0,
+      exaustaoOuFraqueza: 0,
+      perdaDoApetite: 0,
+      producaoDeCatarro: 0,
       dorDeGarganta: 0,
       dorDeCabeca: 0,
-      dorNoCorpo: 0,
-      calafrio: 0,
-      nauseaOuVomito: 0,
-      narizEntupido: 0,
+      sanguePeloNarizOuBoca: 0,
       diarreia: 0,
-      tosseComSangue: 0,
-      olhosVermelhos: 0,
+      enjooOuVomito: 0,
+      dorDeBarriga: 0,
+      irritacaoNosOlhos: 0,
+      confusaoOuSonolencia: 0,
+      tonturas: 0,
+      dorNoPeito: 0,
+      dificuldadeDeSentirCheiroOuGosto: 0,
     };
     const newState = empty ? stateReset : state;
 
@@ -77,19 +85,23 @@ export default function Symptoms() {
 
   const {
     febre,
-    tosseSeca,
-    fadiga,
-    tosseComCatarro,
-    faltaDeAr,
+    tosse,
+    dificuldadeDeRespirar,
+    doresMusculares,
+    exaustaoOuFraqueza,
+    perdaDoApetite,
+    producaoDeCatarro,
     dorDeGarganta,
     dorDeCabeca,
-    dorNoCorpo,
-    calafrio,
-    nauseaOuVomito,
-    narizEntupido,
+    sanguePeloNarizOuBoca,
     diarreia,
-    tosseComSangue,
-    olhosVermelhos,
+    enjooOuVomito,
+    dorDeBarriga,
+    irritacaoNosOlhos,
+    confusaoOuSonolencia,
+    tonturas,
+    dorNoPeito,
+    dificuldadeDeSentirCheiroOuGosto,
   } = state;
 
   return (
@@ -115,42 +127,62 @@ export default function Symptoms() {
             <FormControlLabel
               control={
                 <CheckBox
-                  checked={tosseSeca === 1}
+                  checked={tosse === 1}
                   onChange={handleChange}
-                  name="tosseSeca"
+                  name="tosse"
                 />
               }
-              label="Tosse Seca"
+              label="Tosse"
             />
             <FormControlLabel
               control={
                 <CheckBox
-                  checked={tosseComCatarro === 1}
+                  checked={dificuldadeDeRespirar === 1}
                   onChange={handleChange}
-                  name="tosseComCatarro"
+                  name="dificuldadeDeRespirar"
                 />
               }
-              label="Tosse Com Catarro"
+              label="Dificuldade de respirar"
             />
             <FormControlLabel
               control={
                 <CheckBox
-                  checked={fadiga === 1}
+                  checked={doresMusculares === 1}
                   onChange={handleChange}
-                  name="fadiga"
+                  name="doresMusculares"
                 />
               }
-              label="Fadiga"
+              label="Dores Musculares"
             />
             <FormControlLabel
               control={
                 <CheckBox
-                  checked={faltaDeAr === 1}
+                  checked={exaustaoOuFraqueza === 1}
                   onChange={handleChange}
-                  name="faltaDeAr"
+                  name="exaustaoOuFraqueza"
                 />
               }
-              label="Falta De Ar"
+              label="Exaustão ou Fraqueza"
+            />
+            <FormControlLabel
+              control={
+                <CheckBox
+                  checked={perdaDoApetite === 1}
+                  onChange={handleChange}
+                  name="perdaDoApetite"
+                />
+              }
+              label="Perda do Apetite"
+            />
+            <FormControlLabel
+              control={
+                <CheckBox
+                  checked={producaoDeCatarro === 1}
+                  onChange={handleChange}
+                  name="producaoDeCatarro"
+                />
+              }
+              label="Produção de catarro"
             />
             <FormControlLabel
               control={
@@ -160,7 +192,7 @@ export default function Symptoms() {
                   name="dorDeGarganta"
                 />
               }
-              label="Dor De Garganta"
+              label="Dor de Garganta"
             />
             <FormControlLabel
               control={
@@ -170,48 +202,19 @@ export default function Symptoms() {
                   name="dorDeCabeca"
                 />
               }
-              label="Dores De Cabeça"
+              label="Dor de cabeça"
             />
             <FormControlLabel
               control={
                 <CheckBox
-                  checked={dorNoCorpo === 1}
+                  checked={sanguePeloNarizOuBoca === 1}
                   onChange={handleChange}
-                  name="dorNoCorpo"
+                  name="sanguePeloNarizOuBoca"
                 />
               }
-              label="Dores no Corpo"
+              label="Sangue pelo nariz ou boca"
             />
-            <FormControlLabel
-              control={
-                <CheckBox
-                  checked={calafrio === 1}
-                  onChange={handleChange}
-                  name="calafrio"
-                />
-              }
-              label="Cala Frio"
-            />
-            <FormControlLabel
-              control={
-                <CheckBox
-                  checked={nauseaOuVomito === 1}
-                  onChange={handleChange}
-                  name="nauseaOuVomito"
-                />
-              }
-              label="Náusea Ou Vomito"
-            />
-            <FormControlLabel
-              control={
-                <CheckBox
-                  checked={narizEntupido === 1}
-                  onChange={handleChange}
-                  name="narizEntupido"
-                />
-              }
-              label="Nariz Entupido"
-            />
+
             <FormControlLabel
               control={
                 <CheckBox
@@ -220,27 +223,91 @@ export default function Symptoms() {
                   name="diarreia"
                 />
               }
-              label="Diarreia"
+              label="Diarréia"
             />
             <FormControlLabel
               control={
                 <CheckBox
-                  checked={tosseComSangue === 1}
+                  checked={enjooOuVomito === 1}
                   onChange={handleChange}
-                  name="tosseComSangue"
+                  name="enjooOuVomito"
                 />
               }
-              label="Tosse Com Sangue"
+              label="Enjôo ou vômito"
             />
             <FormControlLabel
               control={
                 <CheckBox
-                  checked={olhosVermelhos === 1}
+                  checked={dorDeBarriga === 1}
                   onChange={handleChange}
-                  name="olhosVermelhos"
+                  name="dorDeBarriga"
                 />
               }
-              label="Olhos Vermelhos"
+              label="Dor de barriga"
+            />
+            <FormControlLabel
+              control={
+                <CheckBox
+                  checked={irritacaoNosOlhos === 1}
+                  onChange={handleChange}
+                  name="irritacaoNosOlhos"
+                />
+              }
+              label="Irritação nos olhos"
+            />
+            <FormControlLabel
+              control={
+                <CheckBox
+                  checked={confusaoOuSonolencia === 1}
+                  onChange={handleChange}
+                  name="confusaoOuSonolencia"
+                />
+              }
+              label="Confusão ou sonolência"
+            />
+
+            <FormControlLabel
+              control={
+                <CheckBox
+                  checked={tonturas === 1}
+                  onChange={handleChange}
+                  name="tonturas"
+                />
+              }
+              label="Tonturas"
+            />
+
+            <FormControlLabel
+              control={
+                <CheckBox
+                  checked={tonturas === 1}
+                  onChange={handleChange}
+                  name="tonturas"
+                />
+              }
+              label="Tonturas"
+            />
+
+            <FormControlLabel
+              control={
+                <CheckBox
+                  checked={dorNoPeito === 1}
+                  onChange={handleChange}
+                  name="dorNoPeito"
+                />
+              }
+              label="Dor no peito"
+            />
+
+            <FormControlLabel
+              control={
+                <CheckBox
+                  checked={dificuldadeDeSentirCheiroOuGosto === 1}
+                  onChange={handleChange}
+                  name="dificuldadeDeSentirCheiroOuGosto"
+                />
+              }
+              label="Dificuldade de sentir cheiro ou gosto"
             />
           </FormGroup>
         </FormControl>

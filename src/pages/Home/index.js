@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { FiShare2 } from 'react-icons/fi';
 
 import Iframe from 'react-iframe';
+import firebase from '../../FirebaseConnection';
 
 // Components
 import Share from '../../components/Share';
