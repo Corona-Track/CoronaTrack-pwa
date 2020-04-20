@@ -1,8 +1,11 @@
 import { makeStyles } from '@material-ui/core/styles';
 import styled from 'styled-components';
-import { $gray600, $gray700 } from '../../styles/variables';
+import { $gray600, $gray700, $gray900, $brandColorPrimary } from '../../styles/variables';
 
 export const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `;
 
 export const Image = styled.img`
@@ -10,6 +13,31 @@ export const Image = styled.img`
   margin-top: 40px;
   margin-bottom: 40px;
 `;
+
+export const ImageIcon = styled.img`
+  width: 50px;
+  height: auto;
+  margin-top: 52px;
+  margin-bottom: 28px;
+`
+
+export const SubTitle = styled.div`
+  color: ${$brandColorPrimary};
+  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Prompt', sans-serif;
+`
+
+export const Text = styled.div`
+  color: ${$gray900};
+  font-size: 14px;
+  font-family: 'Prompt', sans-serif;
+  letter-spacing: -0.03em;
+  margin-top: 16px;
+  width: 70%;
+  align-self: center;
+`
 
 export const useStyles = makeStyles(() => ({
   result: {

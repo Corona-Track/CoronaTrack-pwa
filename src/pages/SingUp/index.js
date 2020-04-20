@@ -10,6 +10,8 @@ import Select from '../../components/Select';
 import Button from '../../components/Button';
 import Loading from '../../components/Loading';
 
+import Iframe from 'react-iframe';
+
 // Styles
 import { Container, Content } from './styles';
 
@@ -194,6 +196,7 @@ export default function Home() {
       <Loading open={loading} />
       <Content>
         <HeaderRouter title="Criar Conta" onClick={() => history.goBack()} />
+
         <p className="description">Dados Pessoais</p>
         <Input
           required

@@ -22,6 +22,8 @@ import SignUpNextStep from '../pages/SingUp/stepTwo';
 
 import Teleorientation from '../pages/Teleorientation';
 
+import Terms from '../pages/Terms';
+
 // Services
 import history from '../services/history';
 
@@ -57,6 +59,7 @@ export default function Routes() {
         <Route path="/teleorientacao" exact component={Teleorientation} isPrivate />
         <Route path="/login" exact component={Login} />
         <Route path="/signUp" exact component={SignUp} />
+        <Route path="/termos" exact component={Terms} />
         <Route path="/signUp/nextStep" exact component={SignUpNextStep} />
         <Route path="*" component={Home} />
       </Switch>
