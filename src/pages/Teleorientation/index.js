@@ -21,7 +21,7 @@ export default function Teleorientation() {
 
     const classes = useStyles();
     const goToPartner = () => {
-        window.open("https://www.aliancamedica.org/");
+        window.open("https://auth.aliancamedica.org/entrar");
     };
     const goToMap = () => {
         history.push('/');

@@ -22,7 +22,7 @@ import SignUpNextStep from '../pages/SingUp/stepTwo';
 
 import Teleorientation from '../pages/Teleorientation';
 
-import Terms from '../pages/Terms';
+import Risk from '../pages/Risk';
 
 // Services
 import history from '../services/history';
@@ -56,10 +56,10 @@ export default function Routes() {
         />
         <Route path="/sintomas" exact component={Symptoms} isPrivate />
         <Route path="/resultado" exact component={Result} isPrivate />
+        <Route path="/risk" exact component={Risk} isPrivate/>
         <Route path="/teleorientacao" exact component={Teleorientation} isPrivate />
         <Route path="/login" exact component={Login} />
         <Route path="/signUp" exact component={SignUp} />
-        <Route path="/termos" exact component={Terms} />
         <Route path="/signUp/nextStep" exact component={SignUpNextStep} />
         <Route path="*" component={Home} />
       </Switch>
