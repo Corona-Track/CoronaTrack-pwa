@@ -9,3 +9,7 @@ export const $gray800 = '#4F4F4F';
 export const $gray700 = '#828282';
 export const $gray600 = '#BDBDBD';
 export const $gray500 = '#E0E0E0';
+
+export const $low = '#27AE60'
+export const $medium = '#FFC700'
+export const $high = '#FF0000'

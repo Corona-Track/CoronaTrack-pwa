@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { $colorDanger } from '../../styles/variables';
+import { $colorDanger, $gray700 } from '../../styles/variables';
 
 export const Container = styled.div`
   width: 100%;
@@ -40,3 +40,9 @@ export const Line = styled.div`
     text-transform: uppercase;
   }
 `;
+
+export const Term = styled.div`
+  font-size: 14px;
+  color: ${$gray700};
+  padding-bottom: 40px;
+`

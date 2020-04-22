@@ -113,7 +113,7 @@ export default function Header({ title, onClick }) {
           </HeadMenu>
           <Description>Olá</Description>
           <Name>{infos.name}</Name>
-          <Description>
+          <Description as={Link} to="/risk" onClick={() => setMenu(false)}>
             {infos.grauDeRisco} Risco
             <FiArrowDownRight
               style={{

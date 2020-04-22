@@ -15,7 +15,7 @@ import { SignInAction, loginWithFacebook } from '../../actions/AuthActions';
 import logo from '../../assets/images/logo.svg';
 
 // Styles
-import { Container, Image, Content, Error, Line } from './styles';
+import { Container, Image, Content, Error, Line, Term } from './styles';
 
 export default function Home() {
   const Dispatch = useDispatch();
@@ -69,6 +69,10 @@ export default function Home() {
         setLoading(false);
       });
   }
+
+  const goToTerms = () => {
+        window.open("https://coronatrack.com.br/politica-de-privacidade-v0/");
+  };
 
   useEffect(() => {
     const loginType = localStorage.getItem('loginType') || null;
@@ -125,6 +129,11 @@ export default function Home() {
         >
           Cadastre-se
         </Button>
+        <Term
+          onClick={() => goToTerms()}
+        >
+          Ao se cadastrar você aceita os Termos e Condições de Uso
+        </Term>
       </Content>
     </Container>
   );
